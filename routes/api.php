@@ -20,6 +20,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/timetables', function () {
+Route::get('/agenda', function () {
     return Day::with('entries')->get();
+});
+
+Route::get('/accommodation', function () {
+    return \App\Models\AccommodationLocation::all();
+});
+
+Route::get('/accommodation/{location}', function (String $location) {
+    return \App\Models\AccommodationLocation::where('location', $location)->get();
+});
+
+Route::get('/visit', function () {
+    return \App\Models\VisitLocation::all();
 });
