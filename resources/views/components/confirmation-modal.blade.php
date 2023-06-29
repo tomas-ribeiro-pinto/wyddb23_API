@@ -18,11 +18,25 @@
                 <form method="POST" action="">
                     @csrf
                     <div class="space-y-12">
-                        <div class="border-b border-gray-900/10 pb-12">
-                            <input type="hidden" name="entryDay" value="{{$entry->id}}">
-                            <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
-                            <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o registo <span class="font-bold">{{$entry->title_pt}}</span> no dia <span class="font-bold">{{$entry->day->day}}</span>?</p>
-                        </div>
+                        @if($model instanceof \App\Models\EntryDay)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="entryDay" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o registo <span class="font-bold">{{$model->title_pt}}</span> no dia <span class="font-bold">{{$model->day->day}}</span>?</p>
+                            </div>
+                        @elseif($model instanceof \App\Models\AccommodationLocation)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="accommodationLocation" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o centro de acolhimento: <span class="font-bold">{{$model->name}}</span>?</p>
+                            </div>
+                        @elseif($model instanceof \App\Models\VisitLocation)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="accommodationLocation" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o ponto de interesse: <span class="font-bold">{{$model->name}}</span>?</p>
+                            </div>
+                        @endif
                     </div>
                     <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                         <button type="submit"

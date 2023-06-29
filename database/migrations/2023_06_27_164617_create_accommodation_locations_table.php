@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('accommodation_locations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
-            $table->text('description_en');
-            $table->text('description_pt');
-            $table->binary('picture');
+            $table->string('location');
+            $table->string('address_line1');
+            $table->string('address_line2');
+            $table->string('contact');
+            $table->text('description_en')->nullable();
+            $table->text('description_pt')->nullable();
+            $table->string('picture');
             $table->timestamps();
         });
     }

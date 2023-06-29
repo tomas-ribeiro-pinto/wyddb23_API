@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('visit_locations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
+            $table->string('address_line1');
+            $table->string('address_line2');
             $table->text('description_en');
             $table->text('description_pt');
-            $table->binary('picture');
+            $table->string('picture');
             $table->timestamps();
             $table->softDeletes();
         });

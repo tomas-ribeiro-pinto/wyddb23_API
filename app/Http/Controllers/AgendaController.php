@@ -50,6 +50,11 @@ class AgendaController extends Controller
 
         $entry->save();
 
+        activity()
+            ->performedOn($entry)
+            ->causedBy(auth()->user())
+            ->log('Entry Added by ' . auth()->user()->name . ' at ' . now());
+
         return back()->with('message', 'Registo adicionado!');
     }
 
@@ -74,6 +79,11 @@ class AgendaController extends Controller
 
         $entryDay->update($attributes);
 
+        activity()
+            ->performedOn($entryDay)
+            ->causedBy(auth()->user())
+            ->log('Entry Updated by ' . auth()->user()->name . ' at ' . now());
+
         return back()->with('message', 'Registo Modificado!');
     }
 
@@ -84,6 +94,11 @@ class AgendaController extends Controller
             $entryDay = EntryDay::find(request('entryDay'));
             $entryDay->delete();
         }
+
+        activity()
+            ->performedOn($entryDay)
+            ->causedBy(auth()->user())
+            ->log('Entry Deleted by ' . auth()->user()->name . ' at ' . now());
 
         return back()->with('message', 'Registo removido!');
     }
