@@ -2,6 +2,7 @@
 
 use App\Models\Day;
 use App\Models\EntryDay;
+use App\Models\InstagramPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,16 @@ Route::get('/accommodation/{location}', function (String $location) {
 
 Route::get('/visit', function () {
     return \App\Models\VisitLocation::all();
+});
+
+Route::get('/image', function () {
+
+    $image = InstagramPost::where('verified', 1)->inRandomOrder()->limit(1)->get('image_url');
+
+    return response()->json(
+        $image,
+        200,
+        [],
+        JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
+    );
 });
