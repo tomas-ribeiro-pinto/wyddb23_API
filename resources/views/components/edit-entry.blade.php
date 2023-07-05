@@ -53,18 +53,18 @@
                 @enderror
             </div>
             <div class="sm:col-span-3">
-                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Início <span class="text-red-500 sups">*</span></label>
+                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Início</label>
                 <div class="mt-2">
-                    <input type="time" value="{{date('G:i', strtotime($entry->start_time))}}" name="start_time" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required/>
+                    <input type="time" value="{{date('G:i', strtotime($entry->start_time))}}" name="start_time" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                 </div>
                 @error('start_time')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror
             </div>
             <div class="sm:col-span-3">
-                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Fim <span class="text-red-500 sups">*</span></label>
+                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Fim</span></label>
                 <div class="mt-2">
-                    <input type="time" value="{{date('G:i', strtotime($entry->end_time))}}" name="end_time" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required/>
+                    <input type="time" value="{{date('G:i', strtotime($entry->end_time))}}" name="end_time" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
                 </div>
                 @error('end_time')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>

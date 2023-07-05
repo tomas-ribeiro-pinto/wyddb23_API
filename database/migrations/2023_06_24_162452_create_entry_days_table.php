@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('title_en');
             $table->string('title_pt');
             $table->string('location');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('end_time')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

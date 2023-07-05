@@ -11,6 +11,6 @@ class Day extends Model
 
     public function entries()
     {
-        return $this->hasMany(EntryDay::class);
+        return $this->hasMany(EntryDay::class)->orderBy('start_time');
     }
 }

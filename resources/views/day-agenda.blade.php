@@ -55,7 +55,13 @@
                             @forelse($entryDays as $entry)
                                 <tr>
                                     <td class="whitespace-wrap px-3 py-4 text-sm text-gray-500">
-                                        {{date('G:i', strtotime($entry->start_time))}} - {{date('G:i', strtotime($entry->end_time))}}
+                                        {{$entry->start_time
+                                            ? date('G:i', strtotime($entry->start_time))
+                                            : 'N/A'
+                                        }} - {{$entry->end_time
+                                            ? date('G:i', strtotime($entry->end_time))
+                                            : 'N/A'
+                                        }}
                                     </td>
                                     <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$entry->title_pt}}</td>
                                     <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$entry->title_en}}</td>

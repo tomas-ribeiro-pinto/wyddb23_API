@@ -8,6 +8,7 @@ use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisitController;
 use App\Models\InstagramPost;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,13 +74,18 @@ Route::get('/instagram', [InstagramController::class, 'index'])->middleware(['au
 
 Route::get('/posts', [InstagramController::class, 'show'])->middleware(['auth', 'verified'])->name('posts');
 Route::post('/posts/validate/{instagramPost}', [InstagramController::class, 'update'])->middleware(['auth', 'verified']);
-Route::post('/posts/delete/{instagramPost}', [InstagramController::class, 'destroy'])->middleware(['auth', 'verified', 'cors']);
+Route::post('/posts/delete/{instagramPost}', [InstagramController::class, 'destroy'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Create Link to storage
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
 });
 
 require __DIR__.'/auth.php';

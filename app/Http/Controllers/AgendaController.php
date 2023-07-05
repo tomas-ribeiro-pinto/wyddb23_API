@@ -20,7 +20,7 @@ class AgendaController extends Controller
 
     public function show(Day $day): View
     {
-        $entryDays = EntryDay::where('day_id', $day->id)->get();
+        $entryDays = EntryDay::where('day_id', $day->id)->orderBy('start_time')->get();
 
         return view('day-agenda', compact("entryDays", "day"));
     }
@@ -33,8 +33,6 @@ class AgendaController extends Controller
             'description_pt' => ['max:3000'],
             'description_en' => ['max:3000'],
             'location' => ['required', 'max:300'],
-            'start_time' => ['required'],
-            'end_time' => ['required'],
         ]);
 
         $entry = EntryDay::create([
@@ -44,8 +42,12 @@ class AgendaController extends Controller
             'description_pt' => request('description_pt'),
             'description_en' => request('description_en'),
             'location' => request('location'),
-            'start_time' => Carbon::parse(request('start_time')),
-            'end_time' => Carbon::parse(request('end_time')),
+            'start_time' => request('start_time')
+                ? Carbon::parse(Day::find(request('day'))->day . ' ' . request('start_time'))
+                : null,
+            'end_time' => request('end_time')
+                ? Carbon::parse(Day::find(request('day'))->day . ' ' . request('end_time'))
+                : null,
         ]);
 
         $entry->save();
@@ -67,12 +69,14 @@ class AgendaController extends Controller
             'description_pt' => ['max:3000'],
             'description_en' => ['max:3000'],
             'location' => ['required', 'max:300'],
-            'start_time' => ['required'],
-            'end_time' => ['required'],
         ]);
 
-        $attributes['start_time'] = Carbon::parse(request('start_time'));
-        $attributes['end_time'] = Carbon::parse(request('end_time'));
+        $attributes['start_time'] = request('start_time')
+            ? Carbon::parse(Day::find(request('day'))->day . ' ' . request('start_time'))
+            : null;
+        $attributes['end_time'] = request('end_time')
+            ? Carbon::parse(Day::find(request('day'))->day . ' ' . request('end_time'))
+            : null;
 
         $attributes['description_pt'] ?? $entryDay->description_pt = null;
         $attributes['description_en'] ?? $entryDay->description_en = null;
