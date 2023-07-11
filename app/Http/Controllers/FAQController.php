@@ -18,10 +18,10 @@ class FAQController extends Controller
     public function create(): \Illuminate\Http\RedirectResponse
     {
         request()->validate([
-            'question_pt' => ['required', 'max:40'],
-            'question_en' => ['required', 'max:40'],
-            'question_es' => ['required', 'max:40'],
-            'question_it' => ['required', 'max:40'],
+            'question_pt' => ['required', 'max:100'],
+            'question_en' => ['required', 'max:100'],
+            'question_es' => ['required', 'max:100'],
+            'question_it' => ['required', 'max:100'],
             'answer_pt' => ['required', 'max:3000'],
             'answer_en' => ['required', 'max:3000'],
             'answer_es' => ['required', 'max:3000'],
@@ -53,10 +53,10 @@ class FAQController extends Controller
     {
         $faq = faq::find(request('id'));
         $attributes = request()->validate([
-            'question_pt' => ['required', 'max:40'],
-            'question_en' => ['required', 'max:40'],
-            'question_es' => ['required', 'max:40'],
-            'question_it' => ['required', 'max:40'],
+            'question_pt' => ['required', 'max:100'],
+            'question_en' => ['required', 'max:100'],
+            'question_es' => ['required', 'max:100'],
+            'question_it' => ['required', 'max:100'],
             'answer_pt' => ['required', 'max:3000'],
             'answer_en' => ['required', 'max:3000'],
             'answer_es' => ['required', 'max:3000'],

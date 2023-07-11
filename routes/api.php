@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/agenda', function () {
-    return Day::with('entries')->get();
+    return Day::with('entries')->orderBy('day')->get();
 });
 
 Route::get('/accommodation', function () {
@@ -59,6 +59,7 @@ Route::get('/information', function () {
             "title_en" => $information->title_en,
             "title_es" => $information->title_es,
             "title_it" => $information->title_it,
+            "image_url" => $information->image_url,
             "body_pt" => $information->body_pt->render(),
             "body_en" => $information->body_en->render(),
             "body_es" => $information->body_es->render(),
