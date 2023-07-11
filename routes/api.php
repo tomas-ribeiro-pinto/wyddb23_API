@@ -2,6 +2,7 @@
 
 use App\Models\Day;
 use App\Models\EntryDay;
+use App\Models\Information;
 use App\Models\InstagramPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,40 @@ Route::get('/accommodation/{location}', function (String $location) {
 
 Route::get('/visit', function () {
     return \App\Models\VisitLocation::all();
+});
+
+Route::get('/contact', function () {
+    return \App\Models\Contact::all();
+});
+
+Route::get('/faq', function () {
+    return \App\Models\faq::all();
+});
+
+Route::get('/information', function () {
+
+    $jsonArray = collect();
+
+    $information_groups = Information::all();
+
+    foreach ($information_groups as $information)
+    {
+        $addArray = array([
+            "title_pt" => $information->title_pt,
+            "title_en" => $information->title_en,
+            "title_es" => $information->title_es,
+            "title_it" => $information->title_it,
+            "body_pt" => $information->body_pt->render(),
+            "body_en" => $information->body_en->render(),
+            "body_es" => $information->body_es->render(),
+            "body_it" => $information->body_it->render(),
+        ]);
+        $jsonArray->add($addArray);
+    }
+
+    return response()->json(
+        $jsonArray,
+    );
 });
 
 Route::get('/image', function () {

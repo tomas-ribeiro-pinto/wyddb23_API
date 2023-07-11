@@ -58,7 +58,27 @@
 
             <div class="sm:col-span-full">
                 <label class="block text-sm font-medium leading-6 text-gray-900">Conteúdo PT 🇵🇹<span class="text-red-500 sups">*</span></label>
-                <x-trix-field id="body_pt" name="body_pt" value="{!! $information->body_pt->toTrixHtml() !!}" />
+                <x-trix-field id="body_pt" name="body_pt"
+                              x-data="{
+                                    upload(event) {
+                                        const data = new FormData();
+                                        data.append('attachment', event.attachment.file);
+
+                                        window.axios.post('/attachments', data, {
+                                            onUploadProgress(progressEvent) {
+                                                event.attachment.setUploadProgress(
+                                                    progressEvent.loaded / progressEvent.total * 100
+                                                );
+                                            },
+                                        }).then(({ data }) => {
+                                            event.attachment.setAttributes({
+                                                url: data.image_url,
+                                            });
+                                        });
+                                    }
+                                }"
+                              x-on:trix-attachment-add="upload"
+                              value="{!! $information->body_pt->toTrixHtml() !!}" />
                 @error('body_pt')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror

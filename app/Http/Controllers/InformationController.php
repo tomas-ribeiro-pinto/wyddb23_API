@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\Information;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InformationController extends Controller
 {
@@ -91,5 +92,17 @@ class InformationController extends Controller
             ->log('Information Deleted by ' . auth()->user()->name . ' at ' . now());
 
         return back()->with('message', 'Registo removido!');
+    }
+
+    public function attach() {
+        request()->validate([
+            'attachment' => ['required', 'file'],
+        ]);
+
+        $path = request()->file('attachment')->store('attachments', 'public');
+
+        return [
+            'image_url' => Storage::disk('public')->url($path),
+        ];
     }
 }

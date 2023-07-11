@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,9 @@ Route::post('/edit-information', [InformationController::class, 'destroy'])->mid
 
 Route::post('/edit-information/add', [InformationController::class, 'create'])->middleware(['auth', 'verified']);
 Route::post('/edit-information/update', [InformationController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('attachments', [InformationController::class, 'attach'])
+    ->middleware(['auth', 'verified'])
+    ->name('attachments.store');
 
 
 Route::get('/content', [ContentController::class, 'index'])
