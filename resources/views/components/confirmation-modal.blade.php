@@ -20,21 +20,47 @@
                     <div class="space-y-12">
                         @if($model instanceof \App\Models\EntryDay)
                             <div class="border-b border-gray-900/10 pb-12">
-                                <input type="hidden" name="entryDay" value="{{$model->id}}">
+                                <input type="hidden" name="id" value="{{$model->id}}">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
-                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o registo <span class="font-bold">{{$model->title_pt}}</span> no dia <span class="font-bold">{{$model->day->day}}</span>?</p>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o registo
+                                    <span class="font-bold">{{$model->title_pt}}</span> no dia <span
+                                            class="font-bold">{{$model->day->day}}</span>?</p>
                             </div>
                         @elseif($model instanceof \App\Models\AccommodationLocation)
                             <div class="border-b border-gray-900/10 pb-12">
-                                <input type="hidden" name="accommodationLocation" value="{{$model->id}}">
+                                <input type="hidden" name="id" value="{{$model->id}}">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
-                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o centro de acolhimento: <span class="font-bold">{{$model->name}}</span>?</p>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o centro
+                                    de acolhimento: <span class="font-bold">{{$model->name}}</span>?</p>
                             </div>
                         @elseif($model instanceof \App\Models\VisitLocation)
                             <div class="border-b border-gray-900/10 pb-12">
-                                <input type="hidden" name="accommodationLocation" value="{{$model->id}}">
+                                <input type="hidden" name="id" value="{{$model->id}}">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
-                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o ponto de interesse: <span class="font-bold">{{$model->name}}</span>?</p>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o ponto
+                                    de interesse: <span class="font-bold">{{$model->name}}</span>?</p>
+                            </div>
+                        @elseif($model instanceof \App\Models\Contact)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="id" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o
+                                    contacto: <span class="font-bold">{{$model->person}}</span> - <span
+                                            class="font-bold">{{$model->contact}}</span>?</p>
+                            </div>
+                        @elseif($model instanceof \App\Models\faq)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="id" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover a
+                                    questão: <span class="font-bold">{{$model->question_pt}}</span>?</p>
+                            </div>
+                        @elseif($model instanceof \App\Models\Information)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="id" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o conteúdo de:
+                                    <span class="font-bold">{{$model->title_pt}}</span>?</p>
                             </div>
                         @endif
                     </div>

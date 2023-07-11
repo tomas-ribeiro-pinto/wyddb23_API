@@ -13,7 +13,7 @@ class AgendaController extends Controller
 {
     public function index(): View
     {
-        $days = Day::all();
+        $days = Day::all()->sortBy('day');
 
         return view('edit-agenda', compact("days"));
     }
@@ -30,8 +30,12 @@ class AgendaController extends Controller
         request()->validate([
             'title_pt' => ['required', 'max:25'],
             'title_en' => ['required', 'max:25'],
+            'title_es' => ['required', 'max:25'],
+            'title_it' => ['required', 'max:25'],
             'description_pt' => ['max:3000'],
             'description_en' => ['max:3000'],
+            'description_es' => ['max:3000'],
+            'description_it' => ['max:3000'],
             'location' => ['required', 'max:300'],
         ]);
 
@@ -39,8 +43,12 @@ class AgendaController extends Controller
             'day_id' => request('day'),
             'title_pt' => request('title_pt'),
             'title_en' => request('title_en'),
+            'title_es' => request('title_es'),
+            'title_it' => request('title_it'),
             'description_pt' => request('description_pt'),
             'description_en' => request('description_en'),
+            'description_es' => request('description_es'),
+            'description_it' => request('description_it'),
             'location' => request('location'),
             'start_time' => request('start_time')
                 ? Carbon::parse(Day::find(request('day'))->day . ' ' . request('start_time'))
@@ -66,8 +74,12 @@ class AgendaController extends Controller
         $attributes = request()->validate([
             'title_pt' => ['required', 'max:25'],
             'title_en' => ['required', 'max:25'],
+            'title_es' => ['required', 'max:25'],
+            'title_it' => ['required', 'max:25'],
             'description_pt' => ['max:3000'],
             'description_en' => ['max:3000'],
+            'description_es' => ['max:3000'],
+            'description_it' => ['max:3000'],
             'location' => ['required', 'max:300'],
         ]);
 
@@ -80,6 +92,8 @@ class AgendaController extends Controller
 
         $attributes['description_pt'] ?? $entryDay->description_pt = null;
         $attributes['description_en'] ?? $entryDay->description_en = null;
+        $attributes['description_es'] ?? $entryDay->description_es = null;
+        $attributes['description_it'] ?? $entryDay->description_it = null;
 
         $entryDay->update($attributes);
 
@@ -93,9 +107,9 @@ class AgendaController extends Controller
 
     public function destroy(): \Illuminate\Http\RedirectResponse
     {
-        if(request('entryDay'))
+        if(request('id'))
         {
-            $entryDay = EntryDay::find(request('entryDay'));
+            $entryDay = EntryDay::find(request('id'));
             $entryDay->delete();
         }
 

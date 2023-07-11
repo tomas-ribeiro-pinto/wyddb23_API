@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\AccommodationController;
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContentController;
-use App\Http\Controllers\ImageController;
+use App\Http\Controllers\FAQController;
+use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisitController;
-use App\Models\InstagramPost;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,34 @@ Route::post('/edit-visits', [VisitController::class, 'destroy'])->middleware(['a
 
 Route::post('/edit-visits/add', [VisitController::class, 'create'])->middleware(['auth', 'verified']);
 Route::post('/edit-visits/update', [VisitController::class, 'update'])->middleware(['auth', 'verified']);
+
+// EDIT CONTACTS
+Route::get('/edit-contacts', [ContactController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('edit-contacts');
+Route::post('/edit-contacts', [ContactController::class, 'destroy'])->middleware(['auth', 'verified']);
+
+Route::post('/edit-contacts/add', [ContactController::class, 'create'])->middleware(['auth', 'verified']);
+Route::post('/edit-contacts/update', [ContactController::class, 'update'])->middleware(['auth', 'verified']);
+
+// EDIT FAQs
+Route::get('/edit-faqs', [FAQController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('edit-faqs');
+Route::post('/edit-faqs', [FAQController::class, 'destroy'])->middleware(['auth', 'verified']);
+
+Route::post('/edit-faqs/add', [FAQController::class, 'create'])->middleware(['auth', 'verified']);
+Route::post('/edit-faqs/update', [FAQController::class, 'update'])->middleware(['auth', 'verified']);
+
+// EDIT INFORMATION
+Route::get('/edit-information', [InformationController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('edit-information');
+Route::post('/edit-information', [InformationController::class, 'destroy'])->middleware(['auth', 'verified']);
+
+Route::post('/edit-information/add', [InformationController::class, 'create'])->middleware(['auth', 'verified']);
+Route::post('/edit-information/update', [InformationController::class, 'update'])->middleware(['auth', 'verified']);
+
 
 Route::get('/content', [ContentController::class, 'index'])
     ->middleware(['auth', 'verified'])

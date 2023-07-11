@@ -38,6 +38,8 @@ class AccommodationController extends Controller
             'picture' => ['required', 'max:250'],
             'description_pt' => ['max:3000'],
             'description_en' => ['max:3000'],
+            'description_es' => ['max:3000'],
+            'description_it' => ['max:3000'],
         ]);
 
         $accommodation = AccommodationLocation::create([
@@ -49,6 +51,8 @@ class AccommodationController extends Controller
             'picture' => request('picture'),
             'description_pt' => request('description_pt'),
             'description_en' => request('description_en'),
+            'description_es' => request('description_es'),
+            'description_it' => request('description_it'),
         ]);
 
         $accommodation->save();
@@ -73,10 +77,14 @@ class AccommodationController extends Controller
             'picture' => ['required', 'max:250'],
             'description_pt' => ['max:3000'],
             'description_en' => ['max:3000'],
+            'description_es' => ['max:3000'],
+            'description_it' => ['max:3000'],
         ]);
 
         $attributes['description_pt'] ?? $accommodation->description_pt = null;
         $attributes['description_en'] ?? $accommodation->description_en = null;
+        $attributes['description_es'] ?? $accommodation->description_es = null;
+        $attributes['description_it'] ?? $accommodation->description_it = null;
 
         $accommodation->update($attributes);
 
@@ -90,9 +98,9 @@ class AccommodationController extends Controller
 
     public function destroy(): \Illuminate\Http\RedirectResponse
     {
-        if(request('accommodationLocation'))
+        if(request('id'))
         {
-            $accommodationLocation = AccommodationLocation::find(request('accommodationLocation'));
+            $accommodationLocation = AccommodationLocation::find(request('id'));
             $accommodationLocation->delete();
         }
 

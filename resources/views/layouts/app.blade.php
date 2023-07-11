@@ -14,6 +14,11 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="//unpkg.com/alpinejs" defer></script>
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+        <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
+        <x-rich-text-trix-styles />
+
 
     </head>
     <body class="font-sans antialiased">
@@ -33,7 +38,7 @@
                 </header>
             @endif
 
-            <!-- Page Content -->
+            <!-- Page Information -->
             <main>
                 {{ $slot }}
             </main>

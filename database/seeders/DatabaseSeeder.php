@@ -64,9 +64,9 @@ class DatabaseSeeder extends Seeder
         $role2 = Role::create(['name' => 'editor']);
         $role3 = Role::create(['name' => 'communicator']);
         $permission1 = Permission::create(['name' => 'Send Notifications']);
-        $permission2 = Permission::create(['name' => 'Add Content']);
-        $permission3 = Permission::create(['name' => 'Edit Content']);
-        $permission4 = Permission::create(['name' => 'Delete Content']);
+        $permission2 = Permission::create(['name' => 'Add Information']);
+        $permission3 = Permission::create(['name' => 'Edit Information']);
+        $permission4 = Permission::create(['name' => 'Delete Information']);
 
         $role1->givePermissionTo($permission1, $permission2, $permission3, $permission4);
         $role2->givePermissionTo($permission1, $permission2, $permission3);
