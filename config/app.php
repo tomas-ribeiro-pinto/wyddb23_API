@@ -185,4 +185,15 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | FCM API v1 Token
+    |--------------------------------------------------------------------------
+    |
+    | This key is the token used to authorize the FCM CLoud Messaging API v1
+    |
+    */
+
+    'fcm_token' => env('FCM_TOKEN'),
+
 ];

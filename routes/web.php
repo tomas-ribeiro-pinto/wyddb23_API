@@ -7,6 +7,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InstagramController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Artisan;
@@ -98,10 +99,9 @@ Route::get('/content', [ContentController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('content');
 
-Route::get('/notifications', function () {
-    return view('notifications');
-})->middleware(['auth', 'verified'])
+Route::get('/notifications', [NotificationController::class, 'index'])->middleware(['auth', 'verified'])
     ->name('send-notification');
+Route::post('/notifications', [NotificationController::class, 'create'])->middleware(['auth', 'verified']);
 
 Route::get('/instagram', [InstagramController::class, 'index'])->middleware(['auth', 'verified']);
 

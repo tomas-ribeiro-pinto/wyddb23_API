@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "google/apiclient": "^2.12.1",
         "guzzlehttp/guzzle": "^7.2",
         "hotwired-laravel/stimulus-laravel": "^0.3.0",
         "laravel/breeze": "^1.21",
