@@ -5,6 +5,7 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FAQController;
+use App\Http\Controllers\GuideController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\NotificationController;
@@ -82,6 +83,14 @@ Route::post('/edit-faqs', [FAQController::class, 'destroy'])->middleware(['auth'
 Route::post('/edit-faqs/add', [FAQController::class, 'create'])->middleware(['auth', 'verified']);
 Route::post('/edit-faqs/update', [FAQController::class, 'update'])->middleware(['auth', 'verified']);
 
+// EDIT GUIDES
+Route::get('/edit-guides', [GuideController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('edit-guides');
+Route::post('/edit-guides', [GuideController::class, 'destroy'])->middleware(['auth', 'verified']);
+
+Route::post('/edit-guides/add', [GuideController::class, 'create'])->middleware(['auth', 'verified']);
+
 // EDIT INFORMATION
 Route::get('/edit-information', [InformationController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -98,6 +107,10 @@ Route::post('attachments', [InformationController::class, 'attach'])
 Route::get('/content', [ContentController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('content');
+
+Route::get('/symday', [ContentController::class, 'symday'])
+    ->middleware(['auth', 'verified'])
+    ->name('symday');
 
 Route::get('/notifications', [NotificationController::class, 'index'])->middleware(['auth', 'verified'])
     ->name('send-notification');

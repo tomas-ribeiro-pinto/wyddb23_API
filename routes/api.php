@@ -46,6 +46,10 @@ Route::get('/faq', function () {
     return \App\Models\faq::all();
 });
 
+Route::get('/guide', function () {
+    return \App\Models\Guide::all();
+});
+
 Route::get('/information', function () {
 
     $jsonArray = collect();

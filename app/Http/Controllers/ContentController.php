@@ -11,4 +11,9 @@ class ContentController extends Controller
     {
         return view('content');
     }
+
+    public function symday(): View
+    {
+        return view('symday-content');
+    }
 }
