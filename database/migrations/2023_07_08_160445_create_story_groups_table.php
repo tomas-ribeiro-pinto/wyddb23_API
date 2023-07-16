@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('story_groups', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('picture_url');
+            $table->text('image_url');
             $table->timestamps();
             $table->softDeletes();
         });

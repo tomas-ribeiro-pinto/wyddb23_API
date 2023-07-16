@@ -46,7 +46,7 @@
                 <label class="block text-sm font-medium leading-6 text-gray-900">Ficheiro PDF<span class="text-red-500 sups">*</span></label>
                 <div class="mt-2">
                     <input name="pdf" type="file"
-                           accept=".docx, .png, .jpg, .pdf" required>
+                           accept=".pdf" required>
                 </div>
                 @error('pdf')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>

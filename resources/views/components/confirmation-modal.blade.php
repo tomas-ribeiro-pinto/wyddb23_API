@@ -69,6 +69,18 @@
                                 <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o guião:
                                     <span class="font-bold">{{$model->title_pt}}</span>?</p>
                             </div>
+                        @elseif($model instanceof \App\Models\Story)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="id" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover a história selecionada?</p>
+                            </div>
+                        @elseif($model instanceof \App\Models\StoryGroup)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="id" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o tópico de História?</p>
+                            </div>
                         @endif
                     </div>
                     <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">

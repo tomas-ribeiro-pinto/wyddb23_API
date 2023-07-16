@@ -4,6 +4,7 @@ use App\Models\Day;
 use App\Models\EntryDay;
 use App\Models\Information;
 use App\Models\InstagramPost;
+use App\Models\StoryGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,10 @@ Route::get('/faq', function () {
 
 Route::get('/guide', function () {
     return \App\Models\Guide::all();
+});
+
+Route::get('/story', function () {
+    return StoryGroup::with('stories')->orderBy('created_at')->get();
 });
 
 Route::get('/information', function () {

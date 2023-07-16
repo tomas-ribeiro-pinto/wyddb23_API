@@ -10,6 +10,7 @@ use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StoriesController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -36,10 +37,10 @@ Route::get('/dashboard', function () {
     ->name('dashboard');
 
 // EDIT AGENDA
-Route::get('/edit-agenda', [AgendaController::class, 'index'])->middleware(['auth', 'verified'])
+Route::get('/edit-agenda', [AgendaController::class, 'index'])->middleware(['auth', 'verified', 'editor'])
     ->name('edit-agenda');
 
-Route::get('/edit-agenda/{day}', [AgendaController::class, 'show'])->middleware(['auth', 'verified']);
+Route::get('/edit-agenda/{day}', [AgendaController::class, 'show'])->middleware(['auth', 'verified', 'editor']);
 Route::post('/edit-agenda/{day}', [AgendaController::class, 'destroy'])->middleware(['auth', 'verified']);
 
 Route::post('/edit-agenda/{day}/add', [AgendaController::class, 'create'])->middleware(['auth', 'verified']);
@@ -47,7 +48,7 @@ Route::post('/edit-agenda/{day}/update', [AgendaController::class, 'update'])->m
 
 
 // EDIT ACCOMMODATION LOCATIONS
-Route::get('/edit-accommodation', [AccommodationController::class, 'index'])->middleware(['auth', 'verified'])
+Route::get('/edit-accommodation', [AccommodationController::class, 'index'])->middleware(['auth', 'verified', 'editor'])
     ->name('edit-accommodation');
 
 Route::get('/edit-accommodation/{location}', [AccommodationController::class, 'show'])->middleware(['auth', 'verified']);
@@ -58,7 +59,7 @@ Route::post('/edit-accommodation/{location}/update', [AccommodationController::c
 
 // EDIT VISIT LOCATIONS
 Route::get('/edit-visits', [VisitController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-visits');
 Route::post('/edit-visits', [VisitController::class, 'destroy'])->middleware(['auth', 'verified']);
 
@@ -67,7 +68,7 @@ Route::post('/edit-visits/update', [VisitController::class, 'update'])->middlewa
 
 // EDIT CONTACTS
 Route::get('/edit-contacts', [ContactController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-contacts');
 Route::post('/edit-contacts', [ContactController::class, 'destroy'])->middleware(['auth', 'verified']);
 
@@ -76,7 +77,7 @@ Route::post('/edit-contacts/update', [ContactController::class, 'update'])->midd
 
 // EDIT FAQs
 Route::get('/edit-faqs', [FAQController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-faqs');
 Route::post('/edit-faqs', [FAQController::class, 'destroy'])->middleware(['auth', 'verified']);
 
@@ -85,7 +86,7 @@ Route::post('/edit-faqs/update', [FAQController::class, 'update'])->middleware([
 
 // EDIT GUIDES
 Route::get('/edit-guides', [GuideController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-guides');
 Route::post('/edit-guides', [GuideController::class, 'destroy'])->middleware(['auth', 'verified']);
 
@@ -93,7 +94,7 @@ Route::post('/edit-guides/add', [GuideController::class, 'create'])->middleware(
 
 // EDIT INFORMATION
 Route::get('/edit-information', [InformationController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-information');
 Route::post('/edit-information', [InformationController::class, 'destroy'])->middleware(['auth', 'verified']);
 
@@ -105,20 +106,31 @@ Route::post('attachments', [InformationController::class, 'attach'])
 
 
 Route::get('/content', [ContentController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'editor'])
     ->name('content');
 
 Route::get('/symday', [ContentController::class, 'symday'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'editor'])
     ->name('symday');
 
-Route::get('/notifications', [NotificationController::class, 'index'])->middleware(['auth', 'verified'])
+Route::get('/notifications', [NotificationController::class, 'index'])->middleware(['auth', 'verified', 'communicator'])
     ->name('send-notification');
 Route::post('/notifications', [NotificationController::class, 'create'])->middleware(['auth', 'verified']);
 
-Route::get('/instagram', [InstagramController::class, 'index'])->middleware(['auth', 'verified']);
+Route::get('/story-group', [StoriesController::class, 'index'])->middleware(['auth', 'verified', 'media'])
+    ->name('story-group');
 
-Route::get('/posts', [InstagramController::class, 'show'])->middleware(['auth', 'verified'])->name('posts');
+Route::post('/story-group/add', [StoriesController::class, 'addGroup'])->middleware(['auth', 'verified', 'media']);
+Route::post('/story-group/', [StoriesController::class, 'deleteGroup'])->middleware(['auth', 'verified', 'media']);
+
+Route::get('/stories/{storyGroup}', [StoriesController::class, 'edit'])->middleware(['auth', 'verified', 'media'])
+    ->name('stories');
+Route::post('/stories/{storyGroup}/add', [StoriesController::class, 'create'])->middleware(['auth', 'verified', 'media']);
+Route::post('/stories/{storyGroup}', [StoriesController::class, 'destroy'])->middleware(['auth', 'verified', 'media']);
+
+Route::get('/instagram', [InstagramController::class, 'index'])->middleware(['auth', 'verified', 'editor']);
+
+Route::get('/posts', [InstagramController::class, 'show'])->middleware(['auth', 'verified', 'editor'])->name('posts');
 Route::post('/posts/validate/{instagramPost}', [InstagramController::class, 'update'])->middleware(['auth', 'verified']);
 Route::post('/posts/delete/{instagramPost}', [InstagramController::class, 'destroy'])->middleware(['auth', 'verified']);
 

@@ -12,14 +12,21 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    @if(Auth::user()->hasRole(['admin', 'editor']))
+                    @can('edit')
                         <x-nav-link :href="route('content')" :active="request()->routeIs('content')">
                             {{ __('Conteúdo APP') }}
                         </x-nav-link>
                     @endif
-                    <x-nav-link :href="route('send-notification')" :active="request()->routeIs('send-notification')">
-                        {{ __('Notificações') }}
-                    </x-nav-link>
+                    @can('send_notification')
+                        <x-nav-link :href="route('send-notification')" :active="request()->routeIs('send-notification')">
+                            {{ __('Notificações') }}
+                        </x-nav-link>
+                    @endcan
+                    @can('manage_social')
+                        <x-nav-link :href="route('story-group')" :active="request()->routeIs('stories')">
+                            {{ __('Histórias') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 

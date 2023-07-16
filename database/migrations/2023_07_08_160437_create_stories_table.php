@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
-            $table->binary('content_url');
+            $table->foreignId('story_group_id');
+            $table->text('content_url');
+            $table->boolean('is_video')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
