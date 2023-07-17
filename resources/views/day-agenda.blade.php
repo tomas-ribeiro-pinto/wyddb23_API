@@ -67,20 +67,18 @@
                                     <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$entry->title_en}}</td>
                                     <td class="whitespace-wrap px-3 py-4 text-sm text-gray-500">{{$entry->location}}</td>
                                     <td class="w-36">
-                                        @if(!auth()->user()->hasRole('notifier'))
-                                            <div class="flex">
-                                                <div x-data='{ show: false }' class="mr-2">
-                                                    <button @click="show = true" type="button" class="rounded-md bg-green-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-600">Editar</button>
-                                                    <x-edit-entry :entry="$entry"/>
-                                                </div>
-                                                @if(auth()->user()->hasRole('admin'))
-                                                    <div x-data="{ show: false }" class="mr-2">
-                                                        <button @click="show = true" type="button" class="rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400">Remover</button>
-                                                        <x-confirmation-modal :model="$entry"/>
-                                                    </div>
-                                                @endif
+                                        <div class="flex">
+                                            <div x-data='{ show: false }' class="mr-2">
+                                                <button @click="show = true" type="button" class="rounded-md bg-green-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-600">Editar</button>
+                                                <x-edit-entry :entry="$entry"/>
                                             </div>
-                                        @endif
+                                            @if(auth()->user()->hasRole('admin'))
+                                                <div x-data="{ show: false }" class="mr-2">
+                                                    <button @click="show = true" type="button" class="rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400">Remover</button>
+                                                    <x-confirmation-modal :model="$entry"/>
+                                                </div>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

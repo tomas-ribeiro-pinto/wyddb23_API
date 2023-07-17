@@ -2,7 +2,9 @@
     <x-slot name="slot">
         <p class="text-sm"><span class="text-red-500 sups">*</span> Campo Obrigatório</p>
         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <input type="hidden" name="day" value="{{$day->id}}"/>
+            @if($day != null)
+                <input type="hidden" name="day" value="{{$day->id}}"/>
+            @endif
             <div class="sm:col-span-3">
                 <label class="block text-sm font-medium leading-6 text-gray-900">Título PT 🇵🇹<span class="text-red-500 sups">*</span></label>
                 <div class="mt-2">

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Editar Guiões') }}
+            {{ __('Editar Pontos de Interesse') }}
             @if ($errors->any())
                 <div class="float-right bg-red-500 p-6 rounded-lg text-sm text-white">
                     <ul class="list-disc">
@@ -16,51 +16,51 @@
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="mb-4 sm:px-6 lg:px-8">
-                <a href="{{ route('symday') }}" class="text-sm inline-flex items-center hover:underline font-semibold text-green-700 mb-6">
+            <div class="overflow-hidden">
+                <a href="{{ route('fatima') }}" class="text-sm inline-flex items-center hover:underline font-semibold text-green-700 mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-5 h-5 fill-green-700">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                     </svg>
                     Voltar atrás
                 </a>
-                <h2 class="text-2xl font-bold">Guiões</h2>
-            </div>
-            <div class="overflow-hidden">
+                <h2 class="text-2xl font-bold">Visitas Fátima</h2>
                 <div x-data='{ show: false }' class="sm:px-6 lg:px-8 mb-8">
-                    <button @click="show = true" type="button" class="btn block float-right rounded-md bg-black px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-800">Adicionar Guião</button>
-                    <x-add-guide/>
+                    <button @click="show = true" type="button" class="btn block float-right rounded-md bg-black px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-800">Adicionar Registo</button>
+                    <x-add-visit/>
                 </div>
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 mb-8">
                     <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-300">
-                            <thead class="bg-orange-600">
+                            <thead class="bg-amber-800">
                             <tr>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                                    <a class="py-2 hover:underline cursor-pointer hover:font-bold">Título PT</a>
+                                    <a class="py-2 hover:underline cursor-pointer hover:font-bold">Ponto de Interesse</a>
                                 </th>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-6">
-                                    <a class="py-2 hover:underline cursor-pointer hover:font-bold">Link</a>
+                                    <a class="py-2 hover:underline cursor-pointer hover:font-bold">Morada</a>
                                 </th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                 </th>
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                            @forelse($guides as $guide)
+                            @forelse($visits as $visit)
                                 <tr>
-                                    <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$guide->title_pt}}</td>
-                                    <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><a target="_blank" class="text-blue-500 underline" href="/storage/{{$guide->asset_url}}">{{$guide->asset_url}}</a></td>
+                                    <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$visit->name}}</td>
+                                    <td class="whitespace-wrap px-3 py-4 text-sm text-gray-500">{{$visit->address_line1}}<br>{{$visit->address_line2}}</td>
                                     <td class="w-36">
-                                        @if(!auth()->user()->hasRole('notifier'))
-                                            <div class="flex">
-                                                @if(auth()->user()->hasRole('admin'))
-                                                    <div x-data="{ show: false }" class="mr-2">
-                                                        <button @click="show = true" type="button" class="rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400">Remover</button>
-                                                        <x-confirmation-modal :model="$guide"/>
-                                                    </div>
-                                                @endif
+                                        <div class="flex">
+                                            <div x-data='{ show: false }' class="mr-2">
+                                                <button @click="show = true" type="button" class="rounded-md bg-green-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-600">Editar</button>
+                                                <x-edit-visit :visit="$visit"/>
                                             </div>
-                                        @endif
+                                            @if(auth()->user()->hasRole('admin'))
+                                                <div x-data="{ show: false }" class="mr-2">
+                                                    <button @click="show = true" type="button" class="rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400">Remover</button>
+                                                    <x-confirmation-modal :model="$visit"/>
+                                                </div>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

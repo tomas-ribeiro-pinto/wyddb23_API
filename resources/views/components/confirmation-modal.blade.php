@@ -33,7 +33,7 @@
                                 <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o centro
                                     de acolhimento: <span class="font-bold">{{$model->name}}</span>?</p>
                             </div>
-                        @elseif($model instanceof \App\Models\VisitLocation)
+                        @elseif($model instanceof \App\Models\VisitLocation || $model instanceof \App\Models\FatimaVisit)
                             <div class="border-b border-gray-900/10 pb-12">
                                 <input type="hidden" name="id" value="{{$model->id}}">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
@@ -62,7 +62,7 @@
                                 <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o conteúdo de:
                                     <span class="font-bold">{{$model->title_pt}}</span>?</p>
                             </div>
-                        @elseif($model instanceof \App\Models\Guide)
+                        @elseif($model instanceof \App\Models\Guide || $model instanceof \App\Models\FatimaGuide)
                             <div class="border-b border-gray-900/10 pb-12">
                                 <input type="hidden" name="id" value="{{$model->id}}">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
@@ -80,6 +80,12 @@
                                 <input type="hidden" name="id" value="{{$model->id}}">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
                                 <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o tópico de História?</p>
+                            </div>
+                        @elseif($model instanceof \App\Models\TimetableEntry)
+                            <div class="border-b border-gray-900/10 pb-12">
+                                <input type="hidden" name="id" value="{{$model->id}}">
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>
+                                <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o evento {{$model->title_pt}} do horário do SYM Day?</p>
                             </div>
                         @endif
                     </div>

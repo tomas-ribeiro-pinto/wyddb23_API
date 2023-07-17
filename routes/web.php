@@ -5,12 +5,17 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FAQController;
+use App\Http\Controllers\FatimaController;
+use App\Http\Controllers\FatimaGuideController;
+use App\Http\Controllers\FatimaVisitController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoriesController;
+use App\Http\Controllers\SymDayController;
+use App\Http\Controllers\TimetableEntryController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +71,15 @@ Route::post('/edit-visits', [VisitController::class, 'destroy'])->middleware(['a
 Route::post('/edit-visits/add', [VisitController::class, 'create'])->middleware(['auth', 'verified']);
 Route::post('/edit-visits/update', [VisitController::class, 'update'])->middleware(['auth', 'verified']);
 
+// EDIT FATIMA VISITS
+Route::get('/fatima/edit-visits', [FatimaVisitController::class, 'index'])
+    ->middleware(['auth', 'verified', 'editor'])
+    ->name('edit-fatima-visits');
+Route::post('/fatima/edit-visits', [FatimaVisitController::class, 'destroy'])->middleware(['auth', 'verified']);
+
+Route::post('/fatima/edit-visits/add', [FatimaVisitController::class, 'create'])->middleware(['auth', 'verified']);
+Route::post('/fatima/edit-visits/update', [FatimaVisitController::class, 'update'])->middleware(['auth', 'verified']);
+
 // EDIT CONTACTS
 Route::get('/edit-contacts', [ContactController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
@@ -92,6 +106,23 @@ Route::post('/edit-guides', [GuideController::class, 'destroy'])->middleware(['a
 
 Route::post('/edit-guides/add', [GuideController::class, 'create'])->middleware(['auth', 'verified']);
 
+// EDIT FATIMA GUIDES
+Route::get('/fatima/edit-guides', [FatimaGuideController::class, 'index'])
+    ->middleware(['auth', 'verified', 'editor'])
+    ->name('edit-fatima-guides');
+Route::post('/fatima/edit-guides', [FatimaGuideController::class, 'destroy'])->middleware(['auth', 'verified']);
+
+Route::post('/fatima/edit-guides/add', [FatimaGuideController::class, 'create'])->middleware(['auth', 'verified']);
+
+// EDIT TIMETABLE
+Route::get('/symday/edit-timetable', [TimetableEntryController::class, 'index'])
+    ->middleware(['auth', 'verified', 'editor'])
+    ->name('edit-timetable');
+Route::post('/symday/edit-timetable', [TimetableEntryController::class, 'destroy'])->middleware(['auth', 'verified', 'editor']);
+
+Route::post('/symday/edit-timetable/add', [TimetableEntryController::class, 'create'])->middleware(['auth', 'verified', 'editor']);
+Route::post('/symday/edit-timetable/update', [TimetableEntryController::class, 'update'])->middleware(['auth', 'verified', 'editor']);
+
 // EDIT INFORMATION
 Route::get('/edit-information', [InformationController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
@@ -104,14 +135,21 @@ Route::post('attachments', [InformationController::class, 'attach'])
     ->middleware(['auth', 'verified'])
     ->name('attachments.store');
 
-
+// CONTENTS
 Route::get('/content', [ContentController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('content');
 
-Route::get('/symday', [ContentController::class, 'symday'])
+Route::get('/symday', [SymDayController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('symday');
+Route::post('/edit-map', [SymDayController::class, 'store'])
+    ->middleware(['auth', 'verified', 'editor']);
+
+Route::get('/fatima', [FatimaController::class, 'index'])
+    ->middleware(['auth', 'verified', 'editor'])
+    ->name('fatima');
+
 
 Route::get('/notifications', [NotificationController::class, 'index'])->middleware(['auth', 'verified', 'communicator'])
     ->name('send-notification');

@@ -4,6 +4,7 @@ use App\Models\Day;
 use App\Models\EntryDay;
 use App\Models\Information;
 use App\Models\InstagramPost;
+use App\Models\Map;
 use App\Models\StoryGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,10 @@ Route::get('/visit', function () {
     return \App\Models\VisitLocation::all();
 });
 
+Route::get('/fatima/visit', function () {
+    return \App\Models\FatimaVisit::all();
+});
+
 Route::get('/contact', function () {
     return \App\Models\Contact::all();
 });
@@ -49,6 +54,14 @@ Route::get('/faq', function () {
 
 Route::get('/guide', function () {
     return \App\Models\Guide::all();
+});
+
+Route::get('/fatima/guide', function () {
+    return \App\Models\FatimaGuide::all();
+});
+
+Route::get('/timetable', function () {
+    return \App\Models\TimetableEntry::all();
 });
 
 Route::get('/story', function () {
@@ -88,6 +101,18 @@ Route::get('/image', function () {
 
     return response()->json(
         $image,
+        200,
+        [],
+        JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
+    );
+});
+
+Route::get('/map', function () {
+
+    $map = Map::all()->first();
+
+    return response()->json(
+        $map,
         200,
         [],
         JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
