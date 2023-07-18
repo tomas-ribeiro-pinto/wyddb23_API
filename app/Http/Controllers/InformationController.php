@@ -25,10 +25,10 @@ class InformationController extends Controller
             'title_es' => ['required', 'max:15'],
             'title_it' => ['required', 'max:15'],
             'image_url' => ['required', 'max:250'],
-            'body_pt' => ['required'],
-            'body_en' => ['required'],
-            'body_es' => ['required'],
-            'body_it' => ['required'],
+            'add_body_pt' => ['required'],
+            'add_body_en' => ['required'],
+            'add_body_es' => ['required'],
+            'add_body_it' => ['required'],
         ]);
 
         $information = Information::create([
@@ -37,10 +37,10 @@ class InformationController extends Controller
             'title_es' => request('title_es'),
             'title_it' => request('title_it'),
             'image_url' => request('image_url'),
-            'body_pt' => request('body_pt'),
-            'body_en' => request('body_en'),
-            'body_es' => request('body_es'),
-            'body_it' => request('body_it'),
+            'body_pt' => request('add_body_pt'),
+            'body_en' => request('add_body_en'),
+            'body_es' => request('add_body_es'),
+            'body_it' => request('add_body_it'),
         ]);
 
         $information->save();

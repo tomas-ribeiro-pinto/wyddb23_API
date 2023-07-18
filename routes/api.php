@@ -5,6 +5,7 @@ use App\Models\EntryDay;
 use App\Models\Information;
 use App\Models\InstagramPost;
 use App\Models\Map;
+use App\Models\NewGuide;
 use App\Models\StoryGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,12 +53,39 @@ Route::get('/faq', function () {
     return \App\Models\faq::all();
 });
 
+//Route::get('/guide', function () {
+//    //return \App\Models\Guide::all();
+//});
+
 Route::get('/guide', function () {
-    return \App\Models\Guide::all();
+
+    $jsonArray = collect();
+
+    $guides = NewGuide::all();
+
+    foreach ($guides as $guide)
+    {
+        $data = array([
+            "title_pt" => $guide->title_pt,
+            "title_en" => $guide->title_en,
+            "title_es" => $guide->title_es,
+            "title_it" => $guide->title_it,
+            "body_pt" => $guide->body_pt->render(),
+            "body_en" => $guide->body_en->render(),
+            "body_es" => $guide->body_es->render(),
+            "body_it" => $guide->body_it->render(),
+        ]);
+        $jsonArray->add($data);
+    }
+
+    return response()->json(
+        $jsonArray,
+    );
 });
 
 Route::get('/fatima/guide', function () {
-    return \App\Models\FatimaGuide::all();
+    //return \App\Models\FatimaGuide::all();
+    return \App\Models\NewFatimaGuide::all();
 });
 
 Route::get('/timetable', function () {
@@ -76,7 +104,7 @@ Route::get('/information', function () {
 
     foreach ($information_groups as $information)
     {
-        $addArray = array([
+        $data = array([
             "title_pt" => $information->title_pt,
             "title_en" => $information->title_en,
             "title_es" => $information->title_es,
@@ -87,12 +115,10 @@ Route::get('/information', function () {
             "body_es" => $information->body_es->render(),
             "body_it" => $information->body_it->render(),
         ]);
-        $jsonArray->add($addArray);
+        $jsonArray->add($data);
     }
 
-    return response()->json(
-        $jsonArray,
-    );
+    return $jsonArray;
 });
 
 Route::get('/image', function () {
@@ -109,7 +135,7 @@ Route::get('/image', function () {
 
 Route::get('/map', function () {
 
-    $map = Map::all()->first();
+    $map = Map::all()->sortBy('updated_at', SORT_DESC, true)->first();
 
     return response()->json(
         $map,

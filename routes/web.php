@@ -102,16 +102,24 @@ Route::post('/edit-faqs/update', [FAQController::class, 'update'])->middleware([
 Route::get('/edit-guides', [GuideController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-guides');
-Route::post('/edit-guides', [GuideController::class, 'destroy'])->middleware(['auth', 'verified']);
+Route::post('/edit-guides/update', [GuideController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('attachments', [GuideController::class, 'attach'])
+    ->middleware(['auth', 'verified'])
+    ->name('attachments.store');
 
+Route::post('/edit-guides', [GuideController::class, 'destroy'])->middleware(['auth', 'verified']);
 Route::post('/edit-guides/add', [GuideController::class, 'create'])->middleware(['auth', 'verified']);
 
 // EDIT FATIMA GUIDES
 Route::get('/fatima/edit-guides', [FatimaGuideController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-fatima-guides');
-Route::post('/fatima/edit-guides', [FatimaGuideController::class, 'destroy'])->middleware(['auth', 'verified']);
+Route::post('/fatima/edit-guides/update', [GuideController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('attachments', [GuideController::class, 'attach'])
+    ->middleware(['auth', 'verified'])
+    ->name('attachments.store');
 
+Route::post('/fatima/edit-guides', [FatimaGuideController::class, 'destroy'])->middleware(['auth', 'verified']);
 Route::post('/fatima/edit-guides/add', [FatimaGuideController::class, 'create'])->middleware(['auth', 'verified']);
 
 // EDIT TIMETABLE
@@ -179,10 +187,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Create Link to storage
-Route::get('/linkstorage', function () {
-    Artisan::call('storage:link');
+//// Create Link to storage
+//Route::get('/linkstorage', function () {
+//    Artisan::call('storage:link');
+//    echo 'ok';
+//});
+
+Route::get('/down', function () {
+    Artisan::call('down');
     echo 'ok';
 });
+
+Route::get('/up', function () {
+    Artisan::call('up');
+    echo 'ok';
+})->name('up');
 
 require __DIR__.'/auth.php';

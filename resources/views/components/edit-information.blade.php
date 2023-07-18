@@ -58,27 +58,7 @@
 
             <div class="sm:col-span-full">
                 <label class="block text-sm font-medium leading-6 text-gray-900">Conteúdo PT 🇵🇹<span class="text-red-500 sups">*</span></label>
-                <x-trix-field id="body_pt" name="body_pt"
-                              x-data="{
-                                    upload(event) {
-                                        const data = new FormData();
-                                        data.append('attachment', event.attachment.file);
-
-                                        window.axios.post('/attachments', data, {
-                                            onUploadProgress(progressEvent) {
-                                                event.attachment.setUploadProgress(
-                                                    progressEvent.loaded / progressEvent.total * 100
-                                                );
-                                            },
-                                        }).then(({ data }) => {
-                                            event.attachment.setAttributes({
-                                                url: data.image_url,
-                                            });
-                                        });
-                                    }
-                                }"
-                              x-on:trix-attachment-add="upload"
-                              value="{!! $information->body_pt->toTrixHtml() !!}" />
+                <x-trix-field :id="'body_pt_' . $information->id" :name="'body_pt'" :value="$information->body_pt->toTrixHtml()"/>
                 @error('body_pt')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror
@@ -86,7 +66,7 @@
 
             <div class="sm:col-span-full">
                 <label class="block text-sm font-medium leading-6 text-gray-900">Conteúdo EN 🇬🇧<span class="text-red-500 sups">*</span></label>
-                <x-trix-field id="body_en" name="body_en" value="{!! $information->body_en->toTrixHtml() !!}" />
+                <x-trix-field :id="'body_en_' . $information->id" :name="'body_en'" :value="$information->body_en->toTrixHtml()"/>
                 @error('body_en')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror
@@ -94,7 +74,7 @@
 
             <div class="sm:col-span-full">
                 <label class="block text-sm font-medium leading-6 text-gray-900">Conteúdo ES 🇪🇸<span class="text-red-500 sups">*</span></label>
-                <x-trix-field id="body_es" name="body_es" value="{!! $information->body_es->toTrixHtml() !!}" />
+                <x-trix-field :id="'body_es_' . $information->id" :name="'body_es'" :value="$information->body_es->toTrixHtml()"/>
                 @error('body_es')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror
@@ -102,7 +82,7 @@
 
             <div class="sm:col-span-full">
                 <label class="block text-sm font-medium leading-6 text-gray-900">Conteúdo IT 🇮🇹<span class="text-red-500 sups">*</span></label>
-                <x-trix-field id="body_it" name="body_it" value="{!! $information->body_it->toTrixHtml() !!}" />
+                <x-trix-field :id="'body_it_' . $information->id" :name="'body_it'" :value="$information->body_it->toTrixHtml()"/>
                 @error('body_it')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror
