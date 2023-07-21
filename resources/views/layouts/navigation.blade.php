@@ -26,6 +26,9 @@
                         <x-nav-link :href="route('story-group')" :active="request()->routeIs('stories')">
                             {{ __('Histórias') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('posts')" :active="request()->routeIs('posts')">
+                            {{ __('Fotos') }}
+                        </x-nav-link>
                     @endcan
                 </div>
             </div>

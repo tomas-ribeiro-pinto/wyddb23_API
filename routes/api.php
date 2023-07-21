@@ -1,12 +1,15 @@
 <?php
 
+use App\Models\AccommodationLocation;
 use App\Models\Day;
+use App\Models\Emergency;
 use App\Models\EntryDay;
 use App\Models\Information;
 use App\Models\InstagramPost;
 use App\Models\Map;
 use App\Models\NewGuide;
 use App\Models\StoryGroup;
+use App\Models\StreamingLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +37,32 @@ Route::get('/accommodation', function () {
 });
 
 Route::get('/accommodation/{location}', function (String $location) {
-    return \App\Models\AccommodationLocation::where('location', $location)->get();
+   $accommodations = AccommodationLocation::where('location', $location)->get();
+
+    $jsonArray = collect();
+
+    foreach ($accommodations as $accommodation)
+    {
+        $data = array([
+            "name" => $accommodation->name,
+            "location" => $accommodation->location,
+            "address_line1" => $accommodation->address_line1,
+            "address_line2" => $accommodation->address_line2,
+            "contact" => $accommodation->contact,
+            "picture" => $accommodation->picture,
+            "body_pt" => $accommodation->description_pt->render(),
+            "body_en" => $accommodation->description_en->render(),
+            "body_es" => $accommodation->description_es->render(),
+            "body_it" => $accommodation->description_it->render(),
+            "create_at" => $accommodation->create_at,
+            "updated_at" => $accommodation->updated_at,
+        ]);
+        $jsonArray->add($data);
+    }
+
+    return response()->json(
+        $jsonArray,
+    );
 });
 
 Route::get('/visit', function () {
@@ -84,8 +112,28 @@ Route::get('/guide', function () {
 });
 
 Route::get('/fatima/guide', function () {
-    //return \App\Models\FatimaGuide::all();
-    return \App\Models\NewFatimaGuide::all();
+    $jsonArray = collect();
+
+    $guides = NewGuide::all();
+
+    foreach ($guides as $guide)
+    {
+        $data = array([
+            "title_pt" => $guide->title_pt,
+            "title_en" => $guide->title_en,
+            "title_es" => $guide->title_es,
+            "title_it" => $guide->title_it,
+            "body_pt" => $guide->body_pt->render(),
+            "body_en" => $guide->body_en->render(),
+            "body_es" => $guide->body_es->render(),
+            "body_it" => $guide->body_it->render(),
+        ]);
+        $jsonArray->add($data);
+    }
+
+    return response()->json(
+        $jsonArray,
+    );
 });
 
 Route::get('/timetable', function () {
@@ -143,4 +191,20 @@ Route::get('/map', function () {
         [],
         JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT
     );
+});
+
+Route::get('/emergency', function () {
+    return Emergency::all()->first();
+});
+
+Route::get('/sym-forum', function () {
+    return StreamingLink::where('name', 'sym-forum')->first();
+});
+
+Route::get('/live-streaming', function () {
+    return StreamingLink::where('name', 'live-streaming')->first();
+});
+
+Route::get('/prayer', function () {
+    return Day::with('prayers')->orderBy('day')->get();
 });

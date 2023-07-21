@@ -1,4 +1,4 @@
-<x-edit-modal :width="null">
+<x-edit-modal :width="'w-full'">
     <x-slot name="slot">
         <p class="text-sm"><span class="text-red-500 sups">*</span> Campo Obrigatório</p>
         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -45,41 +45,36 @@
                 @enderror
             </div>
 
-            <div class="sm:col-span-3">
-                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Descrição PT 🇵🇹</label>
-                <div class="mt-2">
-                    <textarea rows="3" type="text" name="description_pt" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{{$accommodationLocation->description_pt}}</textarea>
-                </div>
+            <div class="sm:col-span-full">
+                <label class="block text-sm font-medium leading-6 text-gray-900">Descrição PT 🇵🇹<span
+                            class="text-red-500 sups">*</span></label>
+                <x-trix-field :id="'description_pt' . $accommodationLocation->id" :name="'description_pt'" :value="$accommodationLocation->description_pt->toTrixHtml()"/>
                 @error('description_pt')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="sm:col-span-3">
-                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Descrição EN 🇬🇧</label>
-                <div class="mt-2">
-                    <textarea rows="3" type="text" name="description_en" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{{$accommodationLocation->description_en}}</textarea>
-                </div>
-                @error('description_pt')
-                    <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
+            <div class="sm:col-span-full">
+                <label class="block text-sm font-medium leading-6 text-gray-900">Descrição EN 🇬🇧<span
+                            class="text-red-500 sups">*</span></label>
+                <x-trix-field :id="'description_en' . $accommodationLocation->id" :name="'description_en'" :value="$accommodationLocation->description_en->toTrixHtml()"/>
+                @error('description_en')
+                <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror
             </div>
-
-            <div class="sm:col-span-3">
-                <label class="block text-sm font-medium leading-6 text-gray-900">Descrição ES 🇪🇸</label>
-                <div class="mt-2">
-                    <textarea rows="3" type="text" name="description_es" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{{$accommodationLocation->description_es}}</textarea>
-                </div>
+            <div class="sm:col-span-full">
+                <label class="block text-sm font-medium leading-6 text-gray-900">Descrição ES 🇪🇸<span
+                            class="text-red-500 sups">*</span></label>
+                <x-trix-field :id="'description_es' . $accommodationLocation->id" :name="'description_es'" :value="$accommodationLocation->description_es->toTrixHtml()"/>
                 @error('description_es')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="sm:col-span-3">
-                <label class="block text-sm font-medium leading-6 text-gray-900">Descrição IT 🇮🇹</label>
-                <div class="mt-2">
-                    <textarea rows="3" type="text" name="description_it" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{{$accommodationLocation->description_it}}</textarea>
-                </div>
+            <div class="sm:col-span-full">
+                <label class="block text-sm font-medium leading-6 text-gray-900">Descrição IT 🇮🇹<span
+                            class="text-red-500 sups">*</span></label>
+                <x-trix-field :id="'description_it' . $accommodationLocation->id" :name="'description_it'" :value="$accommodationLocation->description_it->toTrixHtml()"/>
                 @error('description_it')
                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                 @enderror

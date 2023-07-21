@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'editor' => \App\Http\Middleware\editor::class,
         'media' => \App\Http\Middleware\media::class,
         'communicator' => \App\Http\Middleware\communicator::class,
+        'admin' => \App\Http\Middleware\admin::class,
     ];
 }

@@ -55,7 +55,8 @@
                                 <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover a
                                     questão: <span class="font-bold">{{$model->question_pt}}</span>?</p>
                             </div>
-                        @elseif($model instanceof \App\Models\Information || $model instanceof \App\Models\NewGuide || $model instanceof \App\Models\NewFatimaGuide)
+                        @elseif($model instanceof \App\Models\Information || $model instanceof \App\Models\NewGuide
+                                || $model instanceof \App\Models\NewFatimaGuide || $model instanceof \App\Models\PrayerDay)
                             <div class="border-b border-gray-900/10 pb-12">
                                 <input type="hidden" name="id" value="{{$model->id}}">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>

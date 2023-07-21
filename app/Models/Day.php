@@ -13,4 +13,9 @@ class Day extends Model
     {
         return $this->hasMany(EntryDay::class)->orderBy('start_time');
     }
+
+    public function prayers()
+    {
+        return $this->hasMany(PrayerDay::class)->orderBy('order_index');
+    }
 }

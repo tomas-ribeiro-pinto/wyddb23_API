@@ -122,7 +122,7 @@ class DatabaseSeeder extends Seeder
 
         EntryDay::create([
             'day_id' => $sym_day->id,
-            'title_en' => 'Missionary Prayers',
+            'title_en' => 'Missionary prayers',
             'title_pt' => 'Orações Missionárias',
             'location' => 'Estoril',
             'start_time' => Carbon::createFromTime(17,30, 0),

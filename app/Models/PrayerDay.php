@@ -5,31 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Tonysm\RichTextLaravel\Casts\AsRichTextContent;
 
-class EntryDay extends Model
+class PrayerDay extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = 'entry_days';
+    protected $table = 'prayer_days';
     protected $hidden = ['deleted_at'];
+
     protected $guarded = [];
 
+    protected $casts = [
+        'body_pt' => AsRichTextContent::class,
+        'body_en' => AsRichTextContent::class,
+        'body_es' => AsRichTextContent::class,
+        'body_it' => AsRichTextContent::class,
+    ];
     public function day()
     {
         return $this->belongsTo(Day::class);
-    }
-
-    public function getTranslatedTitleAttribute(string $locale)
-    {
-        if($locale == 'en')
-            $title = $this->title_en;
-        else if($locale == 'pt')
-            $title = $this->title_pt;
-        else
-            $title = $this->title_en;
-
-
-        return $title;
     }
 }

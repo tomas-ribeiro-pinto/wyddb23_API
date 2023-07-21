@@ -67,8 +67,6 @@ class GuideController extends Controller
 
         dd(request('body_pt'));
 
-        $guide->update($attributes);
-
         activity()
             ->performedOn($guide)
             ->causedBy(auth()->user())

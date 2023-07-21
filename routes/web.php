@@ -12,6 +12,7 @@ use App\Http\Controllers\GuideController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PrayerDayController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoriesController;
 use App\Http\Controllers\SymDayController;
@@ -122,6 +123,16 @@ Route::post('attachments', [GuideController::class, 'attach'])
 Route::post('/fatima/edit-guides', [FatimaGuideController::class, 'destroy'])->middleware(['auth', 'verified']);
 Route::post('/fatima/edit-guides/add', [FatimaGuideController::class, 'create'])->middleware(['auth', 'verified']);
 
+// EDIT PRAYERS
+Route::get('/edit-prayers', [PrayerDayController::class, 'index'])->middleware(['auth', 'verified', 'editor'])
+    ->name('edit-prayers');
+
+Route::get('/edit-prayers/{day}', [PrayerDayController::class, 'show'])->middleware(['auth', 'verified', 'editor']);
+Route::post('/edit-prayers/{day}', [PrayerDayController::class, 'destroy'])->middleware(['auth', 'verified']);
+
+Route::post('/edit-prayers/{day}/add', [PrayerDayController::class, 'create'])->middleware(['auth', 'verified']);
+Route::post('/edit-prayers/{day}/update', [PrayerDayController::class, 'update'])->middleware(['auth', 'verified']);
+
 // EDIT TIMETABLE
 Route::get('/symday/edit-timetable', [TimetableEntryController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
@@ -151,7 +162,13 @@ Route::get('/content', [ContentController::class, 'index'])
 Route::get('/symday', [SymDayController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('symday');
-Route::post('/edit-map', [SymDayController::class, 'store'])
+Route::post('/edit-map', [SymDayController::class, 'storeMap'])
+    ->middleware(['auth', 'verified', 'editor']);
+Route::post('/sym-forum/edit-link', [SymDayController::class, 'storeSymForum'])
+    ->middleware(['auth', 'verified', 'editor']);
+Route::post('/live-streaming/edit-link', [SymDayController::class, 'storeLiveStreaming'])
+    ->middleware(['auth', 'verified', 'editor']);
+Route::post('/edit-emergency', [SymDayController::class, 'storeEmergency'])
     ->middleware(['auth', 'verified', 'editor']);
 
 Route::get('/fatima', [FatimaController::class, 'index'])
@@ -196,11 +213,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/down', function () {
     Artisan::call('down');
     echo 'ok';
-});
+})->middleware(['auth', 'verified', 'admin']);
 
 Route::get('/up', function () {
     Artisan::call('up');
     echo 'ok';
-})->name('up');
+})->middleware(['auth', 'verified', 'admin'])->name('up');
 
 require __DIR__.'/auth.php';

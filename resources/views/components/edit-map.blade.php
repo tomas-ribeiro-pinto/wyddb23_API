@@ -22,20 +22,68 @@
                             <h2 class="text-base font-semibold leading-7 text-gray-900">Adicionar Mapa</h2>
                             @if($map != null)
                                 <div class="sm:col-span-full mb-4 mt-2">
-                                    <label class="block text-sm font-medium leading-6 text-gray-900">Mapa Atual</label>
-                                    <a target="_blank" class="text-blue-500 underline" href="/storage/{{$map->url}}">{{$map->url}}</a>
+                                    <label class="block text-sm font-medium leading-6 text-gray-900">Mapa Atual PT 🇵🇹</label>
+                                    <a target="_blank" class="text-blue-500 underline" href="/storage/{{$map->url_pt}}">{{$map->url_pt}}</a>
                                 </div>
                             @endif
-                            <div class="sm:col-span-full">
-                                <label class="block text-sm font-medium leading-6 text-gray-900">Ficheiro PDF<span class="text-red-500 sups">*</span></label>
+                            <div class="sm:col-span-full mb-4">
+                                <label class="block text-sm font-medium leading-6 text-gray-900">Mapa PT 🇵🇹</label>
                                 <div class="mt-2">
-                                    <input name="pdf" type="file"
-                                           accept=".pdf" required>
+                                    <input name="pdf_pt" type="file"
+                                           accept=".pdf">
                                 </div>
-                                @error('pdf')
+                                @error('pdf_pt')
                                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+                        @if($map != null)
+                            <div class="sm:col-span-full mb-4 mt-2">
+                                <label class="block text-sm font-medium leading-6 text-gray-900">Mapa Atual EN 🇬🇧</label>
+                                <a target="_blank" class="text-blue-500 underline" href="/storage/{{$map->url_en}}">{{$map->url_en}}</a>
+                            </div>
+                        @endif
+                        <div class="sm:col-span-full mb-4">
+                            <label class="block text-sm font-medium leading-6 text-gray-900">Mapa EN 🇬🇧</label>
+                            <div class="mt-2">
+                                <input name="pdf_en" type="file"
+                                       accept=".pdf">
+                            </div>
+                            @error('pdf_en')
+                            <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        @if($map != null)
+                            <div class="sm:col-span-full mb-4 mt-2">
+                                <label class="block text-sm font-medium leading-6 text-gray-900">Mapa Atual ES 🇪🇸</label>
+                                <a target="_blank" class="text-blue-500 underline" href="/storage/{{$map->url_es}}">{{$map->url_es}}</a>
+                            </div>
+                        @endif
+                        <div class="sm:col-span-full mb-4">
+                            <label class="block text-sm font-medium leading-6 text-gray-900">Mapa ES 🇪🇸</label>
+                            <div class="mt-2">
+                                <input name="pdf_es" type="file"
+                                       accept=".pdf">
+                            </div>
+                            @error('pdf_es')
+                            <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        @if($map != null)
+                            <div class="sm:col-span-full mb-4 mt-2">
+                                <label class="block text-sm font-medium leading-6 text-gray-900">Mapa Atual IT 🇮🇹</label>
+                                <a target="_blank" class="text-blue-500 underline" href="/storage/{{$map->url_it}}">{{$map->url_it}}</a>
+                            </div>
+                        @endif
+                        <div class="sm:col-span-full mb-4">
+                            <label class="block text-sm font-medium leading-6 text-gray-900">Mapa IT 🇮🇹</label>
+                            <div class="mt-2">
+                                <input name="pdf_it" type="file"
+                                       accept=".pdf">
+                            </div>
+                            @error('pdf_it')
+                            <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
                         </div>
                     </div>
                     <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
