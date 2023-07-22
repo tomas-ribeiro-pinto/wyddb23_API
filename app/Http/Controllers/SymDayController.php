@@ -75,10 +75,15 @@ class SymDayController extends Controller
         $map = Map::all()->first();
         if($map != null)
         {
-            $map->url_pt = $url_pt;
-            $map->url_en = $url_en;
-            $map->url_es = $url_es;
-            $map->url_it = $url_it;
+            if($url_pt)
+                $map->url_pt = $url_pt;
+            if($url_en)
+                $map->url_en = $url_en;
+            if($url_es)
+                $map->url_es = $url_es;
+            if($url_it)
+                $map->url_it = $url_it;
+
             $map->update();
         }
         {
@@ -176,6 +181,7 @@ class SymDayController extends Controller
         {
             $emergency->update($attributes);
         }
+        else
         {
             $emergency = Emergency::create([
                 'title_pt' => request('title_pt'),

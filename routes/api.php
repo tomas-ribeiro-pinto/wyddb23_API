@@ -8,6 +8,7 @@ use App\Models\Information;
 use App\Models\InstagramPost;
 use App\Models\Map;
 use App\Models\NewGuide;
+use App\Models\PrayerDay;
 use App\Models\StoryGroup;
 use App\Models\StreamingLink;
 use Illuminate\Http\Request;
@@ -137,7 +138,7 @@ Route::get('/fatima/guide', function () {
 });
 
 Route::get('/timetable', function () {
-    return \App\Models\TimetableEntry::all();
+    return \App\Models\TimetableEntry::all()->sortBy('start_time')->collect();
 });
 
 Route::get('/story', function () {
@@ -194,7 +195,25 @@ Route::get('/map', function () {
 });
 
 Route::get('/emergency', function () {
-    return Emergency::all()->first();
+
+    $jsonArray = collect();
+
+    $emergency = Emergency::all()->first();
+
+    $data = array([
+        "title_pt" => $emergency->title_pt,
+        "title_en" => $emergency->title_en,
+        "title_es" => $emergency->title_es,
+        "title_it" => $emergency->title_it,
+        "image_url" => $emergency->image_url,
+        "body_pt" => $emergency->body_pt->render(),
+        "body_en" => $emergency->body_en->render(),
+        "body_es" => $emergency->body_es->render(),
+        "body_it" => $emergency->body_it->render(),
+    ]);
+    $jsonArray->add($data);
+
+    return $jsonArray;
 });
 
 Route::get('/sym-forum', function () {
@@ -206,5 +225,47 @@ Route::get('/live-streaming', function () {
 });
 
 Route::get('/prayer', function () {
-    return Day::with('prayers')->orderBy('day')->get();
+
+    $jsonArray = collect();
+
+    $prayerDays = Day::with('prayers')->orderBy('day')->get();
+
+
+    foreach ($prayerDays as $prayerDay)
+    {
+        foreach($prayerDay->prayers as $prayer)
+        {
+            $data = array([
+                "day" => $prayer->day,
+                "order_index" => $prayer->order_index,
+                "title_pt" => $prayer->title_pt,
+                "title_en" => $prayer->title_en,
+                "title_es" => $prayer->title_es,
+                "title_it" => $prayer->title_it,
+                "body_pt" => $prayer->body_pt->render(),
+                "body_en" => $prayer->body_en->render(),
+                "body_es" => $prayer->body_es->render(),
+                "body_it" => $prayer->body_it->render(),
+            ]);
+            $jsonArray->add($data);
+        }
+        if($prayerDay->prayers->count() == 0)
+        {
+            $data = array([
+                "day" => $prayerDay,
+                "order_index" => null,
+                "title_pt" => null,
+                "title_en" => null,
+                "title_es" => null,
+                "title_it" => null,
+                "body_pt" => null,
+                "body_en" => null,
+                "body_es" => null,
+                "body_it" => null,
+            ]);
+            $jsonArray->add($data);
+        }
+    }
+
+    return $jsonArray;
 });
