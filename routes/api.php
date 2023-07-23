@@ -224,6 +224,11 @@ Route::get('/live-streaming', function () {
     return StreamingLink::where('name', 'live-streaming')->first();
 });
 
+Route::get('/cache', function () {
+    return \App\Models\CacheEraser::all()->sortBy('updated_at');
+});
+
+
 Route::get('/prayer', function () {
 
     $jsonArray = collect();
