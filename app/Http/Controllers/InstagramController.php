@@ -2,63 +2,112 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FetchedInstagramPost;
 use App\Models\Image;
 use App\Models\InstagramPost;
+use App\Models\StoryGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Post;
 
 class InstagramController extends Controller
 {
     public function index()
     {
-        $hashtag = "wyddonbosco23";
-        $response = Http::get('https://www.instagram.com/explore/tags/' . $hashtag . '/?__a=1&__d=dis');
+        // Fetch Instagram Posts from WYD Don Bosco 23 Instagram Account
+        $response = Http::get('https://graph.instagram.com/me/media?fields=id&access_token=' . env('INSTAGRAM_ACCESS_TOKEN'));
 
         if($response->ok())
         {
-            $posts = json_decode($response)->graphql->hashtag->edge_hashtag_to_media->edges;
-            $currentPosts = InstagramPost::select('id')->get();
+            $postsJson = json_decode($response)->data;
+
+            $posts = collect();
 
             $tmp = 0;
-            foreach ($posts as $post) if ($tmp < 10){
-                if(!InstagramPost::find($post->node->id))
+
+            foreach ($postsJson as $post) if ($tmp <= 5){
+                // Fetch Post Media IDs
+                $response = Http::get('https://graph.instagram.com/' . $post->id . '/children?&access_token=' . env('INSTAGRAM_ACCESS_TOKEN'));
+
+                $mediaJson = json_decode($response)->data;
+
+                foreach($mediaJson as $asset)
                 {
-                    Storage::disk('images')->put($post->node->id . '.jpg', file_get_contents($post->node->display_url));
-                    InstagramPost::create([
-                        'id' => $post->node->id,
-                        'user_id' => $post->node->owner->id,
-                        'image_url' => "/storage/images/" . $post->node->id . '.jpg',
-                        'verified' => false
-                    ]);
-                    $tmp++;
+                    // Fetch Image by ID
+                    $response = Http::get("https://graph.instagram.com/" . $asset->id . "?fields=id,media_type,media_url,username&access_token=" . env('INSTAGRAM_ACCESS_TOKEN'));
+
+                    $responseJson = json_decode($response);;
+
+                    if($responseJson->media_type == 'IMAGE')
+                    {
+                        $posts->add($responseJson->media_url);
+                    }
                 }
+                $tmp++;
             }
-            return redirect(route('posts'));
+
+            return view('posts.index', compact('posts'));
         }
         else
             Log::error('API response code: ' . $response->status());
 
-        return abort($response->status());
+        $posts = [];
+        return view('posts.index', compact('posts'));
     }
 
     public function show()
     {
-        $posts = InstagramPost::where('verified', 0)->paginate(30);
-        return view('posts', compact('posts'));
+        $posts = InstagramPost::all();
+        return view('posts.show', compact('posts'));
     }
 
-    /**
-        Update Verified Status
-     */
-    public function update(InstagramPost $instagramPost)
+    public function store()
     {
-        $instagramPost->verified = 1;
-        $instagramPost->update();
+        $post = request('post');
+        $file = file_get_contents($post);
 
-        return back()->with('message', 'Imagem Validada!');
+        $url = '/storage/images/' . Storage::disk('images')->put('', $file);
+
+        $newPost = InstagramPost::create([
+            'user_id' => "50365563511",
+            'image_url' => $url,
+            'verified' => true
+        ]);
+
+        activity()
+            ->performedOn($newPost)
+            ->causedBy(auth()->user())
+            ->log('Instagram Post Added by ' . auth()->user()->name . ' at ' . now());
+
+        return back()->with('message', 'Imagem Adicionada!');
+    }
+
+    public function create()
+    {
+        request()->validate([
+            'content' => ['required', 'max:80000'],
+        ]);
+
+        $file = request()->file('content');
+
+        $url = '/storage/images/' . Storage::disk('images')->put('', $file);
+
+
+        $newPost = InstagramPost::create([
+            'user_id' => auth()->user()->getAuthIdentifier(),
+            'image_url' => $url,
+            'verified' => true
+        ]);
+
+        activity()
+            ->performedOn($newPost)
+            ->causedBy(auth()->user())
+            ->log('Instagram Post Created by ' . auth()->user()->name . ' at ' . now());
+
+        return back()->with('message', 'Imagem Adicionada!');
     }
 
     /**
@@ -66,12 +115,17 @@ class InstagramController extends Controller
      */
     public function destroy(InstagramPost $instagramPost)
     {
-        $instagramPost->verified = -1;
-        $instagramPost->update();
-
         if(Storage::exists($instagramPost->image_url)){
             Storage::delete($instagramPost->image_url);
         }
+
+        $instagramPost->delete();
+
+        activity()
+            ->performedOn($instagramPost)
+            ->causedBy(auth()->user())
+            ->log('Instagram Post Deleted by ' . auth()->user()->name . ' at ' . now());
+
         return back()->with('message', 'Imagem Removida!');
     }
 }

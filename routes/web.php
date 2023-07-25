@@ -158,6 +158,8 @@ Route::post('attachments', [InformationController::class, 'attach'])
 Route::get('/content', [ContentController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('content');
+Route::post('/cache', [ContentController::class, 'eraseCache'])
+    ->middleware(['auth', 'verified', 'admin']);
 
 Route::get('/symday', [SymDayController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
@@ -191,11 +193,15 @@ Route::get('/stories/{storyGroup}', [StoriesController::class, 'edit'])->middlew
 Route::post('/stories/{storyGroup}/add', [StoriesController::class, 'create'])->middleware(['auth', 'verified', 'media']);
 Route::post('/stories/{storyGroup}', [StoriesController::class, 'destroy'])->middleware(['auth', 'verified', 'media']);
 
-Route::get('/instagram', [InstagramController::class, 'index'])->middleware(['auth', 'verified', 'editor']);
+//Route::get('/instagram', [InstagramController::class, 'index'])->middleware(['auth', 'verified', 'editor']);
 
-Route::get('/posts', [InstagramController::class, 'show'])->middleware(['auth', 'verified', 'editor'])->name('posts');
-Route::post('/posts/validate/{instagramPost}', [InstagramController::class, 'update'])->middleware(['auth', 'verified']);
-Route::post('/posts/delete/{instagramPost}', [InstagramController::class, 'destroy'])->middleware(['auth', 'verified']);
+Route::get('/posts', [InstagramController::class, 'index'])->middleware(['auth', 'verified', 'media'])->name('posts');
+Route::get('/posts/verified', [InstagramController::class, 'show'])->middleware(['auth', 'verified', 'media'])->name('posts-verified');
+Route::post('/posts/verified/delete/{instagramPost}', [InstagramController::class, 'destroy'])->middleware(['auth', 'verified', 'media']);
+Route::post('/posts/add', [InstagramController::class, 'store'])->middleware(['auth', 'verified', 'media']);
+Route::post('/posts/create', [InstagramController::class, 'create'])->middleware(['auth', 'verified', 'media']);
+//Route::post('/posts/validate/{instagramPost}', [InstagramController::class, 'update'])->middleware(['auth', 'verified']);
+//Route::post('/posts/delete/{instagramPost}', [InstagramController::class, 'destroy'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {

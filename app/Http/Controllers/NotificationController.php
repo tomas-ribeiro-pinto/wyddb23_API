@@ -27,23 +27,28 @@ class NotificationController extends Controller
             'body_it' => ['required', 'max:200'],
         ]);
 
-        activity()
-            ->causedBy(auth()->user())
-            ->log('Notification Sent by ' . auth()->user()->name . ' at ' . now() .
-                ' \n TitleEn:' . request('title_en')  . 'BodyEn: ' . request('body_en') .
-                ' TitlePt:' . request('title_pt')  . 'BodyPt: ' . request('body_pt') .
-                ' TitleEs:' . request('title_es')  . 'BodyEs: ' . request('body_es' .
-                ' TitleIt:' . request('title_it')  . 'BodyIt: ' . request('body_it')));
-
         foreach (['en', 'pt', 'es', 'it'] as $locale)
         {
+            $extra = array();
+
+            if(request('screen'))
+            {
+                $extra["screen"] = request('screen');
+            }
+
+            if(request('url'))
+            {
+                $extra["url"] = request('url');
+            }
+
             $data = [
                 "message" => [
                     "topic" => $locale,
                     "notification" => [
                         "title" => request('title_' . $locale),
                         "body" => request('body_' . $locale),
-                    ]
+                    ],
+                    "data" => $extra
                 ],
             ];
 
@@ -58,6 +63,15 @@ class NotificationController extends Controller
                 return back()->with('error', 'Erro ao Enviar!');
             }
         }
+
+        activity()
+            ->causedBy(auth()->user())
+            ->log('Notification Sent by ' . auth()->user()->name . ' at ' . now() .
+                ' \n TitleEn:' . request('title_en')  . 'BodyEn: ' . request('body_en') .
+                ' TitlePt:' . request('title_pt')  . 'BodyPt: ' . request('body_pt') .
+                ' TitleEs:' . request('title_es')  . 'BodyEs: ' . request('body_es' .
+                    ' TitleIt:' . request('title_it')  . 'BodyIt: ' . request('body_it')).
+                    ' data: screen: ' . $extra['screen'] ?? 'null' . ' url: ' . $extra['url'] ?? 'null');
 
         return back()->with('message', 'Notificação Enviada!');
     }

@@ -45,8 +45,8 @@
                         var uploadField = document.getElementById("content");
 
                         uploadField.onchange = function() {
-                            if(this.files[0].size > 2097152){
-                                alert("Ficheiro é demasiado grande! Reduza o tamanho do ficheiro para menos de 2MB");
+                            if(this.files[0].size > 2097152 * 8){
+                                alert("Ficheiro é demasiado grande! Reduza o tamanho do ficheiro para menos de 16MB");
                                 uploadField.value = "";
                             };
                         };

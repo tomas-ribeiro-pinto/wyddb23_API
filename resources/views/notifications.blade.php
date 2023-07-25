@@ -101,6 +101,36 @@
                                 <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                        </div>
+
+                        <div class="flex-col sm:col-span-3">
+                            <div>
+                                <label class="block text-sm font-medium leading-6 text-gray-900">Redirecionar para Ecrâ</label>
+                                <div class="mt-2">
+                                    <p class="text-sm mb-2">Selecione o ecrã em que a notificação abrirá. Se deixar em branco, o ecrã principal será aberto.</p>
+                                    <select class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" name="screen">
+                                        <option selected></option>
+                                        @foreach(['welcome', 'symDay', 'prayers', 'agenda', 'guides', 'accommodation', 'visit'] as $option)
+                                            <option value="{{$option}}">{{$option}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @error('body_it')
+                                <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="flex-col sm:col-span-3">
+                            <div class="sm:col-span-full">
+                                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Redirecionar para URL</label>
+                                <div class="mt-2">
+                                    <input type="text" placeholder="Ex: https://www.salesianos.pt/wp-content/uploads/sites/2/2020/01/salesianos-lisboa-patio.jpg" name="url" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" required/>
+                                </div>
+                                @error('picture')
+                                <div class="error text-sm text-red-500 mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </form>

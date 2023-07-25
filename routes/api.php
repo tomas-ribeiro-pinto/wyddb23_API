@@ -4,6 +4,7 @@ use App\Models\AccommodationLocation;
 use App\Models\Day;
 use App\Models\Emergency;
 use App\Models\EntryDay;
+use App\Models\FatimaGuide;
 use App\Models\Information;
 use App\Models\InstagramPost;
 use App\Models\Map;
@@ -115,7 +116,7 @@ Route::get('/guide', function () {
 Route::get('/fatima/guide', function () {
     $jsonArray = collect();
 
-    $guides = NewGuide::all();
+    $guides = FatimaGuide::all();
 
     foreach ($guides as $guide)
     {
