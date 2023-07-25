@@ -69,11 +69,15 @@ class InstagramController extends Controller
         $post = request('post');
         $file = file_get_contents($post);
 
-        $url = '/storage/images/' . Storage::disk('images')->put('', $file);
+        $paths = explode('.', $post);
+
+        $path = end($paths);
+
+        Storage::disk('images')->put($path . '.jpg', $file);
 
         $newPost = InstagramPost::create([
             'user_id' => "50365563511",
-            'image_url' => $url,
+            'image_url' => '/storage/images/' . $path . '.jpg',
             'verified' => true
         ]);
 
@@ -82,7 +86,7 @@ class InstagramController extends Controller
             ->causedBy(auth()->user())
             ->log('Instagram Post Added by ' . auth()->user()->name . ' at ' . now());
 
-        return back()->with('message', 'Imagem Adicionada!');
+        return redirect('posts/verified')->with('message', 'Imagem Adicionada!');
     }
 
     public function create()

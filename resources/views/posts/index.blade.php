@@ -44,10 +44,13 @@
             </script>
         </div>
         <div class="flex flex-wrap mx-auto sm:px-6 lg:px-8 justify-center items-center">
+            @if($posts == null)
+                <p>Serviço Indisponível, tente dentro de 1 hora! Chegou ao limite de uso por hora desta funcionalidade...</p>
+            @endif
             @foreach($posts as $post)
                 <div class="flex-col m-4 p-4 bg-amber-500 shadow-lg border border-gray-200 rounded-xl">
                     <img src="{{$post}}" class="h-56"/>
-                    <form method="POST" action="{{request()->fullUrl() . '/add'}}">
+                    <form target="_blank" method="POST" action="{{request()->fullUrl() . '/add'}}">
                         @csrf
                         <input type="hidden" name="post" value="{{$post}}"/>
                         <button type="submit" class="rounded-md bg-green-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-600">
