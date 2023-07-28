@@ -69,7 +69,7 @@
                             <p class="text-2xl font-bold text-white">SYM Forum</p>
                         </div>
                     </button>
-                    <x-edit-link :link="$sym_forum" :action="'/sym-forum/edit-link'"/>
+                    <x-edit-forum :forum="$forum"/>
                 </div>
                 <div x-data='{ show: false }' class="flex flex-1 justify-center items-center bg-orange-600 rounded-xl h-56 w-36 p-4 m-4">
                     <button @click="show = true" class="flex flex-1 justify-center items-center bg-orange-600 rounded-xl h-56 w-36 p-4 m-4">

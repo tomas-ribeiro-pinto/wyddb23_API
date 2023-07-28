@@ -166,13 +166,14 @@ Route::post('/cache', [ContentController::class, 'eraseCache'])
 Route::get('/symday', [SymDayController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('symday');
+
 Route::post('/edit-map', [SymDayController::class, 'storeMap'])
-    ->middleware(['auth', 'verified', 'editor']);
-Route::post('/sym-forum/edit-link', [SymDayController::class, 'storeSymForum'])
     ->middleware(['auth', 'verified', 'editor']);
 Route::post('/live-streaming/edit-link', [SymDayController::class, 'storeLiveStreaming'])
     ->middleware(['auth', 'verified', 'editor']);
 Route::post('/edit-emergency', [SymDayController::class, 'storeEmergency'])
+    ->middleware(['auth', 'verified', 'editor']);
+Route::post('/edit-forum', [SymDayController::class, 'storeSymForum'])
     ->middleware(['auth', 'verified', 'editor']);
 
 Route::get('/fatima', [FatimaController::class, 'index'])

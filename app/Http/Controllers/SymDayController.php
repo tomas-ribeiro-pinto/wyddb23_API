@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emergency;
+use App\Models\Forum;
 use App\Models\Map;
 use App\Models\StreamingLink;
 use Illuminate\Contracts\View\View;
@@ -33,7 +34,23 @@ class SymDayController extends Controller
             ]);
         }
 
-        return view('symday-content', compact("map", "live_streaming", "sym_forum", "emergency"));
+        $forum = Forum::all()->first();
+
+        if($forum == null)
+        {
+            $forum = new Forum([
+                'title_pt' => '',
+                'title_en' => '',
+                'title_es' => '',
+                'title_it' => '',
+                'body_pt' => '',
+                'body_en' => '',
+                'body_es' => '',
+                'body_it' => '',
+            ]);
+        }
+
+        return view('symday-content', compact("map", "live_streaming", "forum", "emergency"));
     }
 
     public function storeMap(): RedirectResponse
@@ -106,31 +123,42 @@ class SymDayController extends Controller
 
     public function storeSymForum(): RedirectResponse
     {
-        request()->validate([
-            'url' => ['required'],
+        $attributes = request()->validate([
+            'title_pt' => ['required', 'max:15'],
+            'title_en' => ['required', 'max:15'],
+            'title_es' => ['required', 'max:15'],
+            'title_it' => ['required', 'max:15'],
+            'body_pt' => ['required'],
+            'body_en' => ['required'],
+            'body_es' => ['required'],
+            'body_it' => ['required'],
         ]);
 
-        $sym_forum = StreamingLink::where('name', 'sym-forum')->first();
+        $forum = Forum::all()->first();
 
-        if($sym_forum != null)
-        {
-            $sym_forum->url = request('url');
-            $sym_forum->update();
-        }
-        {
-            $sym_forum = StreamingLink::create([
-                'name' => 'sym-forum',
-                'url' => request('url'),
+        if ($forum != null) {
+            $forum->update($attributes);
+        } else {
+            $forum = Forum::create([
+                'title_pt' => request('title_pt'),
+                'title_en' => request('title_en'),
+                'title_es' => request('title_es'),
+                'title_it' => request('title_it'),
+                'body_pt' => request('body_pt'),
+                'body_en' => request('body_en'),
+                'body_es' => request('body_es'),
+                'body_it' => request('body_it'),
             ]);
-            $sym_forum->save();
+
+            $forum->save();
         }
 
         activity()
-            ->performedOn($sym_forum)
+            ->performedOn($forum)
             ->causedBy(auth()->user())
-            ->log('SYM Forum Link Updated by ' . auth()->user()->name . ' at ' . now());
+            ->log('SYM Forum Updated by ' . auth()->user()->name . ' at ' . now());
 
-        return back()->with('message', 'Link adicionado!');
+        return back()->with('message', 'Registo Modificado!');
     }
 
     public function storeLiveStreaming(): RedirectResponse

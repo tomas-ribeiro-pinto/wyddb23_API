@@ -5,6 +5,7 @@ use App\Models\Day;
 use App\Models\Emergency;
 use App\Models\EntryDay;
 use App\Models\FatimaGuide;
+use App\Models\Forum;
 use App\Models\Information;
 use App\Models\InstagramPost;
 use App\Models\Map;
@@ -218,7 +219,25 @@ Route::get('/emergency', function () {
 });
 
 Route::get('/sym-forum', function () {
-    return StreamingLink::where('name', 'sym-forum')->first();
+
+    $jsonArray = collect();
+
+    $emergency = Forum::all()->first();
+
+    $data = array([
+        "title_pt" => $emergency->title_pt,
+        "title_en" => $emergency->title_en,
+        "title_es" => $emergency->title_es,
+        "title_it" => $emergency->title_it,
+        "image_url" => $emergency->image_url,
+        "body_pt" => $emergency->body_pt->render(),
+        "body_en" => $emergency->body_en->render(),
+        "body_es" => $emergency->body_es->render(),
+        "body_it" => $emergency->body_it->render(),
+    ]);
+    $jsonArray->add($data);
+
+    return $jsonArray;
 });
 
 Route::get('/live-streaming', function () {
