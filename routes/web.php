@@ -11,6 +11,7 @@ use App\Http\Controllers\FatimaVisitController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\InstagramController;
+use App\Http\Controllers\NewVisitController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PrayerDayController;
 use App\Http\Controllers\ProfileController;
@@ -47,30 +48,31 @@ Route::get('/edit-agenda', [AgendaController::class, 'index'])->middleware(['aut
     ->name('edit-agenda');
 
 Route::get('/edit-agenda/{day}', [AgendaController::class, 'show'])->middleware(['auth', 'verified', 'editor']);
-Route::post('/edit-agenda/{day}', [AgendaController::class, 'destroy'])->middleware(['auth', 'verified']);
+Route::post('/edit-agenda/{day}', [AgendaController::class, 'destroy'])->middleware(['auth', 'verified', 'editor']);
 
-Route::post('/edit-agenda/{day}/add', [AgendaController::class, 'create'])->middleware(['auth', 'verified']);
-Route::post('/edit-agenda/{day}/update', [AgendaController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('/edit-agenda/{day}/add', [AgendaController::class, 'create'])->middleware(['auth', 'verified', 'editor']);
+Route::post('/edit-agenda/{day}/update', [AgendaController::class, 'update'])->middleware(['auth', 'verified', 'editor']);
 
 
 // EDIT ACCOMMODATION LOCATIONS
 Route::get('/edit-accommodation', [AccommodationController::class, 'index'])->middleware(['auth', 'verified', 'editor'])
     ->name('edit-accommodation');
 
-Route::get('/edit-accommodation/{location}', [AccommodationController::class, 'show'])->middleware(['auth', 'verified']);
-Route::post('/edit-accommodation/{location}', [AccommodationController::class, 'destroy'])->middleware(['auth', 'verified']);
+Route::get('/edit-accommodation/{location}', [AccommodationController::class, 'show'])->middleware(['auth', 'verified', 'editor']);
+Route::post('/edit-accommodation/{location}', [AccommodationController::class, 'destroy'])->middleware(['auth', 'verified', 'editor']);
 
-Route::post('/edit-accommodation/{location}/add', [AccommodationController::class, 'create'])->middleware(['auth', 'verified']);
-Route::post('/edit-accommodation/{location}/update', [AccommodationController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('/edit-accommodation/{location}/add', [AccommodationController::class, 'create'])->middleware(['auth', 'verified', 'editor']);
+Route::post('/edit-accommodation/{location}/update', [AccommodationController::class, 'update'])->middleware(['auth', 'verified', 'editor']);
 
 // EDIT VISIT LOCATIONS
-Route::get('/edit-visits', [VisitController::class, 'index'])
+Route::get('/edit-visits', [NewVisitController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-visits');
-Route::post('/edit-visits', [VisitController::class, 'destroy'])->middleware(['auth', 'verified']);
+Route::get('/edit-visits/{location}', [NewVisitController::class, 'show'])->middleware(['auth', 'verified', 'editor']);
+Route::post('/edit-visits/{location}', [NewVisitController::class, 'destroy'])->middleware(['auth', 'verified', 'editor']);
 
-Route::post('/edit-visits/add', [VisitController::class, 'create'])->middleware(['auth', 'verified']);
-Route::post('/edit-visits/update', [VisitController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('/edit-visits/{location}/add', [NewVisitController::class, 'create'])->middleware(['auth', 'verified', 'editor']);
+Route::post('/edit-visits/{location}/update', [NewVisitController::class, 'update'])->middleware(['auth', 'verified', 'editor']);
 
 // EDIT FATIMA VISITS
 Route::get('/fatima/edit-visits', [FatimaVisitController::class, 'index'])

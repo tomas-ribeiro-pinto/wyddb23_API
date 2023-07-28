@@ -33,7 +33,7 @@
                                 <p class="mt-1 text-lg leading-6 text-gray-600">Tem a certeza que quer remover o centro
                                     de acolhimento: <span class="font-bold">{{$model->name}}</span>?</p>
                             </div>
-                        @elseif($model instanceof \App\Models\VisitLocation || $model instanceof \App\Models\FatimaVisit)
+                        @elseif($model instanceof \App\Models\NewVisit || $model instanceof \App\Models\FatimaVisit)
                             <div class="border-b border-gray-900/10 pb-12">
                                 <input type="hidden" name="id" value="{{$model->id}}">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Remover</h2>

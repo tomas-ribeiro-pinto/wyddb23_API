@@ -68,7 +68,7 @@ Route::get('/accommodation/{location}', function (String $location) {
 });
 
 Route::get('/visit', function () {
-    return \App\Models\VisitLocation::all();
+    return \App\Models\NewVisit::all();
 });
 
 Route::get('/fatima/visit', function () {

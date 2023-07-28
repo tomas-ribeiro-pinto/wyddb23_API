@@ -16,22 +16,24 @@
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="overflow-hidden">
-                <a href="{{ route('fatima') }}" class="text-sm inline-flex items-center hover:underline font-semibold text-green-700 mb-6">
+            <div class="mb-4 sm:px-6 lg:px-8">
+                <a href="{{ route('edit-visits') }}" class="text-sm inline-flex items-center hover:underline font-semibold text-green-700 mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-5 h-5 fill-green-700">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                     </svg>
-                    Voltar atrás
+                    Voltar à lista
                 </a>
-                <h2 class="text-2xl font-bold">Visitas Fátima</h2>
+                <h2 class="text-2xl font-bold"><span class="font-semibold text-2xl text-black leading-tight p-2 bg-amber-500 rounded-2xl">{{ucwords($location)}}</span></h2>
+            </div>
+            <div class="overflow-hidden">
                 <div x-data='{ show: false }' class="sm:px-6 lg:px-8 mb-8">
                     <button @click="show = true" type="button" class="btn block float-right rounded-md bg-black px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-800">Adicionar Registo</button>
-                    <x-add-visit :location="null"/>
+                    <x-add-visit :location="$location"/>
                 </div>
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 mb-8">
                     <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                         <table class="min-w-full divide-y divide-gray-300">
-                            <thead class="bg-amber-800">
+                            <thead class="bg-amber-500">
                             <tr>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
                                     <a class="py-2 hover:underline cursor-pointer hover:font-bold">Ponto de Interesse</a>
@@ -49,18 +51,20 @@
                                     <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{$visit->name}}</td>
                                     <td class="whitespace-wrap px-3 py-4 text-sm text-gray-500">{{$visit->address_line1}}<br>{{$visit->address_line2}}</td>
                                     <td class="w-36">
-                                        <div class="flex">
-                                            <div x-data='{ show: false }' class="mr-2">
-                                                <button @click="show = true" type="button" class="rounded-md bg-green-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-600">Editar</button>
-                                                <x-edit-visit :visit="$visit"/>
-                                            </div>
-                                            @if(auth()->user()->hasRole('admin'))
-                                                <div x-data="{ show: false }" class="mr-2">
-                                                    <button @click="show = true" type="button" class="rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400">Remover</button>
-                                                    <x-confirmation-modal :model="$visit"/>
+                                        @if(!auth()->user()->hasRole('notifier'))
+                                            <div class="flex">
+                                                <div x-data='{ show: false }' class="mr-2">
+                                                    <button @click="show = true" type="button" class="rounded-md bg-green-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-600">Editar</button>
+                                                    <x-edit-visit :visit="$visit" :location="$location"/>
                                                 </div>
-                                            @endif
-                                        </div>
+                                                @if(auth()->user()->hasRole('admin'))
+                                                    <div x-data="{ show: false }" class="mr-2">
+                                                        <button @click="show = true" type="button" class="rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400">Remover</button>
+                                                        <x-confirmation-modal :model="$visit"/>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

@@ -4,7 +4,7 @@
     type="hidden"
     name="{{ $name }}"
     id="{{ $id }}_input"
-    value="{!! $value !!}"
+    value="{{ $value }}"
 />
 
 <trix-editor
