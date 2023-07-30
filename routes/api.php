@@ -40,13 +40,14 @@ Route::get('/accommodation', function () {
 });
 
 Route::get('/accommodation/{location}', function (String $location) {
-   $accommodations = AccommodationLocation::where('location', $location)->get();
+    $accommodations = AccommodationLocation::where('location', $location)->get();
 
     $jsonArray = collect();
+    $locationList = collect();
 
     foreach ($accommodations as $accommodation)
     {
-        $data = array([
+        $data = new AccommodationLocation([
             "name" => $accommodation->name,
             "location" => $accommodation->location,
             "address_line1" => $accommodation->address_line1,
@@ -60,8 +61,10 @@ Route::get('/accommodation/{location}', function (String $location) {
             "create_at" => $accommodation->create_at,
             "updated_at" => $accommodation->updated_at,
         ]);
-        $jsonArray->add($data);
+        $locationList->add($data);
     }
+
+    $jsonArray->add($locationList);
 
     return response()->json(
         $jsonArray,

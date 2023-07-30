@@ -26,7 +26,7 @@
             @if(Session::has('message'))
                 <x-flash-message :message="session('message')"/>
             @elseif(Session::has('error'))
-                <x-flash-error-message :message="session('message')"/>
+                <x-flash-error-message :message="session('error')"/>
             @endif
 
             @include('layouts.navigation')

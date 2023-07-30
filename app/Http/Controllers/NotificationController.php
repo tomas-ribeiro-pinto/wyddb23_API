@@ -17,10 +17,10 @@ class NotificationController extends Controller
 
     public function create() {
         request()->validate([
-            'title_pt' => ['required', 'max:30'],
-            'title_en' => ['required', 'max:30'],
-            'title_es' => ['required', 'max:30'],
-            'title_it' => ['required', 'max:30'],
+            'title_pt' => ['required', 'max:45'],
+            'title_en' => ['required', 'max:45'],
+            'title_es' => ['required', 'max:45'],
+            'title_it' => ['required', 'max:45'],
             'body_pt' => ['required', 'max:200'],
             'body_en' => ['required', 'max:200'],
             'body_es' => ['required', 'max:200'],
@@ -41,16 +41,31 @@ class NotificationController extends Controller
                 $extra["url"] = request('url');
             }
 
-            $data = [
-                "message" => [
-                    "topic" => $locale,
-                    "notification" => [
-                        "title" => request('title_' . $locale),
-                        "body" => request('body_' . $locale),
+            if(request('screen') == null && request('url') == null)
+            {
+                $data = [
+                    "message" => [
+                        "topic" => $locale,
+                        "notification" => [
+                            "title" => request('title_' . $locale),
+                            "body" => request('body_' . $locale),
+                        ],
                     ],
-                    "data" => $extra
-                ],
-            ];
+                ];
+            }
+            else
+            {
+                $data = [
+                    "message" => [
+                        "topic" => $locale,
+                        "notification" => [
+                            "title" => request('title_' . $locale),
+                            "body" => request('body_' . $locale),
+                        ],
+                        "data" => $extra
+                    ],
+                ];
+            }
 
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $this->configureClient(),
