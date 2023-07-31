@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SentNotification;
 use Google_Client;
 use Google_Exception;
 use Google_Service_FirebaseCloudMessaging;
@@ -86,7 +87,20 @@ class NotificationController extends Controller
                 ' TitlePt:' . request('title_pt')  . 'BodyPt: ' . request('body_pt') .
                 ' TitleEs:' . request('title_es')  . 'BodyEs: ' . request('body_es' .
                     ' TitleIt:' . request('title_it')  . 'BodyIt: ' . request('body_it')).
-                    ' data: screen: ' . $extra['screen'] ?? 'null' . ' url: ' . $extra['url'] ?? 'null');
+                    ' data: ' . json_encode($extra));
+
+        $notification = SentNotification::create([
+            'title_en' => request('title_en'),
+            'title_pt' => request('title_pt'),
+            'title_es' => request('title_es'),
+            'title_it' => request('title_it'),
+            'body_en' => request('body_en'),
+            'body_pt' => request('body_pt'),
+            'body_es' => request('body_es'),
+            'body_it' => request('body_it'),
+            'data' => json_encode($extra)
+        ]);
+        $notification->save();
 
         return back()->with('message', 'Notificação Enviada!');
     }

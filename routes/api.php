@@ -87,9 +87,9 @@ Route::get('/faq', function () {
     return \App\Models\faq::all();
 });
 
-//Route::get('/guide', function () {
-//    //return \App\Models\Guide::all();
-//});
+Route::get('/notification', function () {
+    return \App\Models\SentNotification::all();
+});
 
 Route::get('/guide', function () {
 
