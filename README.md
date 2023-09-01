@@ -1,66 +1,71 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# WYD Don Bosco 2023 API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Description
 
-## About Laravel
+WYDDB23 API is a back office that hosts an API that communicates with the [WYD Don Bosco 23](https://github.com/tomas-ribeiro-pinto/wyddb23_flutter) flutter mobile app. The web application was developed using Laravel's PHP framework and can send notifications to the users of the app using Firebase Cloud Messaging, fetch instagram post media from a public account and provide content for the app as well as Instagram-like stories in the format of .mp4 files.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> ⚠️ Most content of the back office is written in Portuguese
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### APP Store Screenshots:
+![Screenshot](https://github.com/tomas-ribeiro-pinto/wyddb23_API/blob/main/screenshots/1.png)
+![Screenshot](https://github.com/tomas-ribeiro-pinto/wyddb23_API/blob/main/screenshots/2.png)
 
-## Learning Laravel
+## Getting Started
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Dependencies
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+* PHP Storm or any other IDE with Laravel installed: [https://docs.flutter.dev/get-started/install](https://laravel.com/docs/10.x/installation)
+* Laravel 10.13.5
+* MySQL 8.1
+* PHP 8.1
+* Server or local environment ready for deployment
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Executing program locally
 
-## Laravel Sponsors
+* Change “.env_example” filename to “.env”
+* Run, launch the server, and seed the app by executing the following commands:
+```
+php artisan serve
+npm run dev
+php artisan migrate --seed
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+> If you are deploying the API locally, please edit the API base URL in the mobile app Flutter code in the [API constants file](https://github.com/tomas-ribeiro-pinto/wyddb23_flutter/blob/main/lib/APIs/WydAPI/api_constants.dart).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Add required Instagram and Firebase Tokens
 
-## Contributing
+* Add to the ".env" file your Instagram Access Token (to fetch posts images) and Firebase Project ID (this will allow to send notifications, see [FlutterFire Docs](https://firebase.flutter.dev/docs/overview) to help you set up)
+* Add a folder named "secrets" under "storage/app"
+* Add the Firebase long-lived token (which will generate the short-lived access token to send the notifications remotely) to a .json file and name it accrodingly to the private key.
+* Create a blank file under the same "secrets" path and name it "access_token.json"
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Admin Credentials
 
-## Code of Conduct
+Use these credentials to access the back office:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Username: admin
+- Password: admin
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The endpoint to register users is disabled, but you can either allow it by uncommenting the code in the path routes/auth.php or you can add more through seeding/PHP Tinker.
 
-## License
+Types of roles and permissions:
+- Admin (add, edit, delete, send notifications and manage instagram media)
+- Editor (add, edit, send notifications and manage instagram media)
+- Communicator (send notifications)
+- Media (manage instagram media)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Authors
+
+Contributors names and contact info:
+
+* Tomás Pinto - morato.toms@gmail.com
+
+## Intellectual Property Warning
+
+> All logos are property of the brand WYD Don Bosco 23 and should only be used according to stated guidelines. More information: https://wyddonbosco23.pt/en/brand/
+
+> For more information about WYD DON BOSCO 23 brand please contact: [comunicação.wyddb23@staff.salesianos.pt](mailto:comunicacao.wyddb23@staff.salesianos.pt)
