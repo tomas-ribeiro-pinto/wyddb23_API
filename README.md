@@ -38,18 +38,18 @@ php artisan migrate --seed
 
 * Add to the ".env" file your Instagram Access Token (to fetch posts images) and Firebase Project ID (this will allow to send notifications, see [FlutterFire Docs](https://firebase.flutter.dev/docs/overview) to help you set up)
 * Add a folder named "secrets" under "storage/app"
-* Add the Firebase long-lived token (which will generate the short-lived access token to send the notifications remotely) to a .json file and name it accrodingly to the private key.
+* Add the Firebase long-lived token (which will generate the short-lived access token to send the notifications remotely) to a .json file and name it accordingly to the private key (Please remember to change the path of this file in the NotificationController as well).
 * Create a blank file under the same "secrets" path and name it "access_token.json"
 
 ### Admin Credentials
 
 Use these credentials to access the back office:
 
-- Username: admin
+- Username: admin@admin.com
 - Password: admin
 
 
-The endpoint to register users is disabled, but you can either allow it by uncommenting the code in the path routes/auth.php or you can add more through seeding/PHP Tinker.
+The endpoint to register users is disabled, but you can either allow it by uncommenting the code in the path "routes/auth.php" or you can add more through seeding/PHP Tinker.
 
 Types of roles and permissions:
 - Admin (add, edit, delete, send notifications and manage instagram media)
