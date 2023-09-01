@@ -1,31 +1,54 @@
 # Project Title
 
-WYD Don Bosco 2023 APP
+WYD Don Bosco 2023 API
 
 ## Description
 
-WYDDB23 APP is a mobile app created for World Youth Day 23 in Lisbon for the SYM (Salesian Youth Movement) using [Flutter](https://flutter.dev), Google's open source framework for building multi-platform applications from a single code base written in Dart. The app includes push notifications using Firebase SDK API an retrieving media from an Instagram account using Meta's API through a backend that contains an API that communicates with this app using Laravel's PHP framework. This backend’s source code is available at: .
+WYDDB23 API is a back office that hosts an API that communicates with the [WYD Don Bosco 23](https://github.com/tomas-ribeiro-pinto/wyddb23_flutter) flutter mobile app. The web application was developed using Laravel's PHP framework and can send notifications to the users of the app using Firebase Cloud Messaging, fetch instagram post media from a public account and provide content for the app as well as Instagram-like stories in the format of .mp4 files.
+
+> ⚠️ Most content of the back office is written in Portuguese
+
 
 ### APP Store Screenshots:
-![Screenshot](https://github.com/tomas-ribeiro-pinto/wyddb23_API/blob/main/screenshots/1.png
+![Screenshot](https://github.com/tomas-ribeiro-pinto/wyddb23_API/blob/main/screenshots/1.png)
 ![Screenshot](https://github.com/tomas-ribeiro-pinto/wyddb23_API/blob/main/screenshots/2.png)
 
 ## Getting Started
 
 ### Dependencies
 
-* Visual Studio Code or any other IDE with Flutter installed: https://docs.flutter.dev/get-started/install
-* Flutter SDK '>=3.0.3 <4.0.0'
-* Backend Office deployed and running WYDDB23 API (source code: )
+* PHP Storm or any other IDE with Laravel installed: [https://docs.flutter.dev/get-started/install](https://laravel.com/docs/10.x/installation)
+* Laravel 10.13.5
+* MySQL 8.1
+* PHP 8.1
+* Server or local environment ready for deployment
 
 ### Executing program
 
 * Change “.env_example” filename to “.env”
-* Add your Weather API Key and Backend API base url to the “.env” file.
-* Run the solution by executing the following command:
+* Add your Instagram Access Token (to fetch posts images) and Firebase Project ID (this will allow to send notifications, see [FlutterFire Docs](https://firebase.flutter.dev/docs/overview) to help you set up)
+* Run, launch the server, and seed the app by executing the following commands:
 ```
-> flutter run
+php artisan serve
+npm run dev
+php artisan migrate --seed
 ```
+
+### Admin Credentials
+
+Use these credentials to access the back office:
+
+*Username: admin
+*Password: admin
+
+The endpoint to register users is disabled, but you can either allow it by uncommenting the code in the path routes/auth.php or you can add more through seeding/PHP Tinker.
+
+Types of roles and permissions:
+- Admin (add, edit, delete, send notifications and manage instagram media)
+- Editor (add, edit, send notifications and manage instagram media)
+- Communicator (send notifications)
+- Media (manage instagram media)
+
 
 ## Authors
 
