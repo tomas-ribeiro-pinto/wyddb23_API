@@ -1,6 +1,4 @@
-# Project Title
-
-WYD Don Bosco 2023 API
+# WYD Don Bosco 2023 API
 
 ## Description
 
@@ -23,10 +21,9 @@ WYDDB23 API is a back office that hosts an API that communicates with the [WYD D
 * PHP 8.1
 * Server or local environment ready for deployment
 
-### Executing program
+### Executing program locally
 
 * Change “.env_example” filename to “.env”
-* Add your Instagram Access Token (to fetch posts images) and Firebase Project ID (this will allow to send notifications, see [FlutterFire Docs](https://firebase.flutter.dev/docs/overview) to help you set up)
 * Run, launch the server, and seed the app by executing the following commands:
 ```
 php artisan serve
@@ -34,12 +31,23 @@ npm run dev
 php artisan migrate --seed
 ```
 
+> If you are deploying the API locally, please edit the API base URL in the mobile app Flutter code in the [API constants file](https://github.com/tomas-ribeiro-pinto/wyddb23_flutter/blob/main/lib/APIs/WydAPI/api_constants.dart).
+
+
+### Add required Instagram and Firebase Tokens
+
+* Add to the ".env" file your Instagram Access Token (to fetch posts images) and Firebase Project ID (this will allow to send notifications, see [FlutterFire Docs](https://firebase.flutter.dev/docs/overview) to help you set up)
+* Add a folder named "secrets" under "storage/app"
+* Add the Firebase long-lived token (which will generate the short-lived access token to send the notifications remotely) to a .json file and name it accrodingly to the private key.
+* Create a blank file under the same "secrets" path and name it "access_token.json"
+
 ### Admin Credentials
 
 Use these credentials to access the back office:
 
-*Username: admin
-*Password: admin
+- Username: admin
+- Password: admin
+
 
 The endpoint to register users is disabled, but you can either allow it by uncommenting the code in the path routes/auth.php or you can add more through seeding/PHP Tinker.
 
