@@ -117,11 +117,10 @@ Route::post('/edit-guides/add', [GuideController::class, 'create'])->middleware(
 Route::get('/fatima/edit-guides', [FatimaGuideController::class, 'index'])
     ->middleware(['auth', 'verified', 'editor'])
     ->name('edit-fatima-guides');
-Route::post('/fatima/edit-guides/update', [GuideController::class, 'update'])->middleware(['auth', 'verified']);
-Route::post('attachments', [GuideController::class, 'attach'])
+Route::post('/fatima/edit-guides/update', [FatimaGuideController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('attachments', [FatimaGuideController::class, 'attach'])
     ->middleware(['auth', 'verified'])
     ->name('attachments.store');
-
 Route::post('/fatima/edit-guides', [FatimaGuideController::class, 'destroy'])->middleware(['auth', 'verified']);
 Route::post('/fatima/edit-guides/add', [FatimaGuideController::class, 'create'])->middleware(['auth', 'verified']);
 

@@ -9,6 +9,7 @@ use App\Models\Forum;
 use App\Models\Information;
 use App\Models\InstagramPost;
 use App\Models\Map;
+use App\Models\NewFatimaGuide;
 use App\Models\NewGuide;
 use App\Models\PrayerDay;
 use App\Models\StoryGroup;
@@ -120,7 +121,7 @@ Route::get('/guide', function () {
 Route::get('/fatima/guide', function () {
     $jsonArray = collect();
 
-    $guides = FatimaGuide::all();
+    $guides = NewFatimaGuide::all();
 
     foreach ($guides as $guide)
     {

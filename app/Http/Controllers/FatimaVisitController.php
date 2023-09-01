@@ -22,10 +22,10 @@ class FatimaVisitController extends Controller
             'address_line1' => ['required', 'max:25'],
             'address_line2' => ['required', 'max:25'],
             'picture' => ['required', 'max:250'],
-            'description_pt' => ['max:3000'],
-            'description_en' => ['max:3000'],
-            'description_es' => ['max:3000'],
-            'description_it' => ['max:3000'],
+            'description_pt' => ['max:5000'],
+            'description_en' => ['max:5000'],
+            'description_es' => ['max:5000'],
+            'description_it' => ['max:5000'],
         ]);
 
         $visit = FatimaVisit::create([
@@ -57,10 +57,10 @@ class FatimaVisitController extends Controller
             'address_line1' => ['required', 'max:25'],
             'address_line2' => ['required', 'max:25'],
             'picture' => ['required', 'max:250'],
-            'description_pt' => ['max:3000'],
-            'description_en' => ['max:3000'],
-            'description_es' => ['max:3000'],
-            'description_it' => ['max:3000'],
+            'description_pt' => ['max:5000'],
+            'description_en' => ['max:5000'],
+            'description_es' => ['max:5000'],
+            'description_it' => ['max:5000'],
         ]);
 
         $attributes['description_pt'] ?? $visit->description_pt = null;

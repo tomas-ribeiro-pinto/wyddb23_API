@@ -19,10 +19,10 @@ class FatimaGuideController extends Controller
     public function create(): \Illuminate\Http\RedirectResponse
     {
         request()->validate([
-            'title_pt' => ['required', 'max:15'],
-            'title_en' => ['required', 'max:15'],
-            'title_es' => ['required', 'max:15'],
-            'title_it' => ['required', 'max:15'],
+            'title_pt' => ['required', 'max:25'],
+            'title_en' => ['required', 'max:25'],
+            'title_es' => ['required', 'max:25'],
+            'title_it' => ['required', 'max:25'],
             'body_pt' => ['required'],
             'body_en' => ['required'],
             'body_es' => ['required'],
@@ -54,10 +54,10 @@ class FatimaGuideController extends Controller
     {
         $guide = NewFatimaGuide::find(request('id'));
         $attributes = request()->validate([
-            'title_pt' => ['required', 'max:15'],
-            'title_en' => ['required', 'max:15'],
-            'title_es' => ['required', 'max:15'],
-            'title_it' => ['required', 'max:15'],
+            'title_pt' => ['required', 'max:25'],
+            'title_en' => ['required', 'max:25'],
+            'title_es' => ['required', 'max:25'],
+            'title_it' => ['required', 'max:25'],
             'body_pt' => ['required'],
             'body_en' => ['required'],
             'body_es' => ['required'],

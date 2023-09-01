@@ -18,46 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $tomas = User::create([
-            'name' => "Tomás Pinto",
-            'email' => 'morato.toms@gmail.com',
-            'password' => bcrypt('salesianos')
-        ]);
-
-        $miguel = User::create([
-            'name' => "Miguel Mendes",
-            'email' => 'miguel.mendes@salesianos.pt',
-            'password' => bcrypt('salesianos')
-        ]);
-
-        $raquel = User::create([
-            'name' => "Raquel",
-            'email' => 'raquel@salesianos.pt',
-            'password' => bcrypt('salesianos')
-        ]);
-
-        $patricia = User::create([
-            'name' => "Patrícia Madeira",
-            'email' => 'patricia.madeira@salesianos.pt',
-            'password' => bcrypt('salesianos')
-        ]);
-
-        $com1 = User::create([
-            'name' => "Secretariado WYD",
-            'email' => 'secretariado.wyddb23@staff.salesianos.pt',
-            'password' => bcrypt('salesianos')
-        ]);
-
-        $com2 = User::create([
-            'name' => "Coordenador SYM",
-            'email' => 'coord.sym23@salesianos.pt',
-            'password' => bcrypt('salesianos')
-        ]);
-
-        $editor = User::create([
-            'name' => "Comunicação WYD",
-            'email' => 'comunicacao.wyddb23@staff.salesianos.pt',
-            'password' => bcrypt('salesianos')
+        $admin = User::create([
+            'name' => "Admin",
+            'email' => 'admin',
+            'password' => bcrypt('admin')
         ]);
 
         $role1 = Role::create(['name' => 'admin']);
@@ -75,15 +39,7 @@ class DatabaseSeeder extends Seeder
         $role3->givePermissionTo($permission1);
         $role4->givePermissionTo($permission5);
 
-        $tomas->assignRole($role1);
-        $miguel->assignRole($role1);
-        $raquel->assignRole($role1);
-        $patricia->assignRole($role1);
-
-        $editor->assignRole($role2);
-
-        $com1->assignRole($role3);
-        $com2->assignRole($role3);
+        $admin->assignRole($role1);
 
         Day::create([
             'day' => date_create('2023-08-01')
