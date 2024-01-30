@@ -15,7 +15,7 @@ WYDDB23 API is a back office that hosts an API that communicates with the [WYD D
 
 ### Dependencies
 
-* PHP Storm or any other IDE with Laravel installed: [https://docs.flutter.dev/get-started/install](https://laravel.com/docs/10.x/installation)
+* PHP Storm or any other IDE with Laravel installed: [https://laravel.com/docs/10.x/installation](https://laravel.com/docs/10.x/installation)
 * Laravel 10.13.5
 * MySQL 8.1
 * PHP 8.1
