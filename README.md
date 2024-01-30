@@ -7,7 +7,7 @@ WYDDB23 API is a back office that hosts an API that communicates with the [WYD D
 > ⚠️ Most content of the back office is written in Portuguese
 
 
-### APP Store Screenshots:
+### Screenshots:
 ![Screenshot](https://github.com/tomas-ribeiro-pinto/wyddb23_API/blob/main/screenshots/1.png)
 ![Screenshot](https://github.com/tomas-ribeiro-pinto/wyddb23_API/blob/main/screenshots/2.png)
 
